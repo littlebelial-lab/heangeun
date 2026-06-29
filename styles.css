@@ -57,12 +57,59 @@ button {
 }
 
 .hero-image {
+  background: #f8f8f5;
+  --cover-x: 0px;
+  --cover-y: 0px;
+  --idle-x: 0px;
+  --idle-y: 0px;
+  --cover-scale: 1.018;
+  --light-x: 58%;
+  --light-y: 38%;
+}
+
+.hero-image::before {
+  position: absolute;
+  z-index: 1;
+  inset: -2.2%;
   background:
     linear-gradient(rgba(248, 248, 245, 0.02), rgba(248, 248, 245, 0.02)),
     url("./assets/portfolio-hero.png") center center / cover no-repeat;
+  content: "";
+  transform:
+    translate3d(
+      calc(var(--cover-x) + var(--idle-x)),
+      calc(var(--cover-y) + var(--idle-y)),
+      0
+    )
+    scale(var(--cover-scale));
+  transform-origin: center;
+  transition:
+    transform 520ms cubic-bezier(0.18, 0.9, 0.18, 1),
+    filter 520ms ease;
+  will-change: transform, filter;
 }
 
-.hero-image > :not(.topbar, .moon-canvas, .particle-field, .orbit) {
+.hero-image::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    radial-gradient(circle at var(--light-x) var(--light-y), rgba(207, 255, 62, 0.16), transparent 18rem),
+    radial-gradient(circle at calc(var(--light-x) + 15%) calc(var(--light-y) + 10%), rgba(111, 232, 255, 0.12), transparent 22rem),
+    linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, 0.22) 48%, transparent 58% 100%);
+  background-size: auto, auto, 220% 100%;
+  content: "";
+  mix-blend-mode: soft-light;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: coverLightSweep 8s ease-in-out infinite;
+}
+
+.hero-image.is-reacting::before {
+  filter: saturate(1.06) contrast(1.025);
+}
+
+.hero-image > :not(.topbar) {
   display: none;
 }
 
@@ -70,23 +117,16 @@ button {
   visibility: hidden;
 }
 
-.hero-image .moon-canvas,
-.hero-image .particle-field,
-.hero-image .orbit {
-  display: block;
-}
-
-.hero-image .moon-canvas {
-  opacity: 0;
-}
-
-.hero-image .particle-field {
-  opacity: 0.9;
-}
-
-.hero-image .orbit {
-  opacity: 0.72;
-  mix-blend-mode: multiply;
+@keyframes coverLightSweep {
+  0%,
+  100% {
+    background-position: 0 0, 0 0, 12% 0;
+    opacity: 0.58;
+  }
+  50% {
+    background-position: 0 0, 0 0, 86% 0;
+    opacity: 0.86;
+  }
 }
 
 .topbar {
@@ -587,6 +627,9 @@ button {
 @media (max-width: 900px) {
   .hero-image {
     min-height: 100svh;
+  }
+
+  .hero-image::before {
     background-position: center top;
   }
 
