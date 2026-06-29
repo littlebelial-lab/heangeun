@@ -1,26 +1,27 @@
 const hero = document.querySelector(".hero");
 const canvas = document.querySelector("#particle-field");
 const moonCanvas = document.querySelector("#moon-canvas");
-const cards = [...document.querySelectorAll(".work-card")];
 const caps = [...document.querySelectorAll(".cap")];
 const ctx = canvas.getContext("2d");
 const moonCtx = moonCanvas.getContext("2d");
-const useImageHero = hero.classList.contains("hero-image");
 
 const pointer = { x: 0.68, y: 0.42, tx: 0.68, ty: 0.42, active: false, strength: 0 };
 let particles = [];
-let dpr = Math.min(window.devicePixelRatio || 1, 2);
-let activeCard = 0;
 let moonCraters = [];
 let moonDust = [];
+let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
 function random(seed) {
   const value = Math.sin(seed * 12.9898) * 43758.5453;
   return value - Math.floor(value);
 }
 
+function wrapX(x, width, margin = 120) {
+  const span = width + margin * 2;
+  return ((((x + margin) % span) + span) % span) - margin;
+}
+
 function resizeCanvas() {
-  if (useImageHero) return;
   const rect = hero.getBoundingClientRect();
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.floor(rect.width * dpr);
@@ -35,30 +36,20 @@ function resizeCanvas() {
   moonCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
   buildParticles(rect.width, rect.height);
   buildMoonTexture(rect.width, rect.height);
-  drawMoon(0);
 }
 
 function buildParticles(width, height) {
   const palette = ["#bffcff", "#6ddcff", "#9b7cff", "#e472ff", "#426dff", "#d6ff46"];
-  const count = width < 760 ? 520 : 1350;
+  const count = width < 760 ? 520 : 1380;
   particles = Array.from({ length: count }, (_, index) => {
-    const t = index / count;
     const plume = Math.pow(random(index + 17), 0.62);
     const band = random(index + 43);
     const spray = (random(index + 11) - 0.5) * (0.06 + plume * 0.34);
     const horizon = height * 0.69 + (random(index + 31) - 0.5) * 42;
     return {
-      t,
       plume,
-      band,
-      x:
-        width * (0.43 + plume * 0.34) +
-        spray * width +
-        Math.sin(plume * 7 + index) * 28,
-      y:
-        horizon -
-        plume * height * (0.34 + band * 0.36) +
-        Math.sin(index * 0.51) * 34,
+      x: width * (0.43 + plume * 0.34) + spray * width + Math.sin(plume * 7 + index) * 28,
+      y: horizon - plume * height * (0.34 + band * 0.36) + Math.sin(index * 0.51) * 34,
       size: 0.45 + random(index + 51) * (band > 0.78 ? 2.1 : 1.35),
       color: palette[index % palette.length],
       speed: 0.22 + random(index + 90) * 0.86,
@@ -68,37 +59,38 @@ function buildParticles(width, height) {
 }
 
 function buildMoonTexture(width, height) {
-  const craterCount = width < 760 ? 70 : 150;
+  const craterCount = width < 760 ? 72 : 155;
   moonCraters = Array.from({ length: craterCount }, (_, index) => ({
     x: random(index + 300) * width,
     y: height * (0.64 + random(index + 410) * 0.32),
     r: 7 + Math.pow(random(index + 510), 2.2) * (width < 760 ? 46 : 86),
     flat: 0.26 + random(index + 610) * 0.34,
     alpha: 0.16 + random(index + 710) * 0.22,
+    drift: 0.06 + random(index + 760) * 0.18,
   }));
 
-  const dustCount = width < 760 ? 700 : 1700;
+  const dustCount = width < 760 ? 720 : 1800;
   moonDust = Array.from({ length: dustCount }, (_, index) => ({
     x: random(index + 900) * width,
     y: height * (0.62 + random(index + 1000) * 0.36),
     r: 0.35 + random(index + 1100) * 1.15,
     a: 0.08 + random(index + 1200) * 0.22,
+    drift: 0.05 + random(index + 1300) * 0.2,
   }));
 }
 
 function drawMoon(time) {
-  if (useImageHero) return;
   const width = moonCanvas.clientWidth;
   const height = moonCanvas.clientHeight;
   moonCtx.clearRect(0, 0, width, height);
 
-  const cx = width * 0.5 + (pointer.x - 0.5) * -18;
+  const cx = width * 0.5 + (pointer.x - 0.5) * -20;
   const cy = height * 1.055 + Math.sin(time * 0.00028) * 8;
   const rx = width * 0.64;
   const ry = height * 0.48;
   const horizonY = cy - ry;
 
-  const halo = moonCtx.createRadialGradient(cx, horizonY + 18, 0, cx, horizonY + 18, width * 0.5);
+  const halo = moonCtx.createRadialGradient(cx, horizonY + 18, 0, cx, horizonY + 18, width * 0.52);
   halo.addColorStop(0, "rgba(255,255,255,0.92)");
   halo.addColorStop(0.18, "rgba(235,240,255,0.52)");
   halo.addColorStop(0.44, "rgba(150,170,255,0.13)");
@@ -116,7 +108,7 @@ function drawMoon(time) {
   moonCtx.closePath();
   moonCtx.clip();
 
-  const surface = moonCtx.createRadialGradient(cx - rx * 0.26, cy - ry * 0.82, 0, cx, cy, rx * 1.12);
+  const surface = moonCtx.createRadialGradient(cx - rx * 0.25, cy - ry * 0.84, 0, cx, cy, rx * 1.12);
   surface.addColorStop(0, "#ffffff");
   surface.addColorStop(0.2, "#d9dde1");
   surface.addColorStop(0.48, "#8f959d");
@@ -134,17 +126,20 @@ function drawMoon(time) {
   moonCtx.fillRect(0, horizonY - 60, width, height);
   moonCtx.globalCompositeOperation = "source-over";
 
+  const moonSpin = time * 0.012;
   moonDust.forEach((d) => {
+    const x = wrapX(d.x + moonSpin * d.drift, width, 80);
     moonCtx.globalAlpha = d.a;
     moonCtx.fillStyle = d.y > height * 0.8 ? "#0d0f13" : "#f4f6f7";
     moonCtx.beginPath();
-    moonCtx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+    moonCtx.arc(x, d.y, d.r, 0, Math.PI * 2);
     moonCtx.fill();
   });
 
   moonCraters.forEach((c) => {
+    const x = wrapX(c.x + moonSpin * c.drift, width, 140);
     moonCtx.save();
-    moonCtx.translate(c.x, c.y);
+    moonCtx.translate(x, c.y);
     moonCtx.scale(1, c.flat);
     const g = moonCtx.createRadialGradient(-c.r * 0.24, -c.r * 0.2, c.r * 0.08, 0, 0, c.r);
     g.addColorStop(0, `rgba(255,255,255,${c.alpha * 0.9})`);
@@ -171,10 +166,10 @@ function drawMoon(time) {
   moonCtx.lineTo(0, horizonY + 42);
   moonCtx.closePath();
   moonCtx.fill();
+  moonCtx.globalAlpha = 1;
 }
 
 function drawParticles(time = 0) {
-  if (useImageHero) return;
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
   pointer.x += (pointer.tx - pointer.x) * 0.12;
@@ -192,9 +187,7 @@ function drawParticles(time = 0) {
 
   ctx.save();
   ctx.globalCompositeOperation = "lighter";
-
-  for (let index = 0; index < particles.length; index += 1) {
-    const p = particles[index];
+  particles.forEach((p, index) => {
     const curve = Math.sin(p.plume * Math.PI);
     const wave = Math.sin(time * 0.001 * p.speed + p.phase);
     let x = p.x + spreadX * curve + wave * (18 + p.plume * 52);
@@ -203,12 +196,12 @@ function drawParticles(time = 0) {
     const dy = y - mouseY;
     const distance = Math.max(Math.hypot(dx, dy), 1);
     const reach = Math.max(width, height) * 0.18;
-    const pull = Math.max(0, 1 - distance / reach) * pointer.strength;
-    x += (dx / distance) * pull * 58;
-    y += (dy / distance) * pull * 42;
-    const radius = p.size * burst * (0.55 + curve * 0.9 + pull * 0.95);
+    const push = Math.max(0, 1 - distance / reach) * pointer.strength;
+    x += (dx / distance) * push * 58;
+    y += (dy / distance) * push * 42;
 
-    ctx.globalAlpha = 0.12 + curve * 0.58 + pull * 0.34;
+    const radius = p.size * burst * (0.55 + curve * 0.9 + push * 0.95);
+    ctx.globalAlpha = 0.12 + curve * 0.58 + push * 0.34;
     ctx.fillStyle = p.color;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -220,7 +213,7 @@ function drawParticles(time = 0) {
       ctx.arc(x, y, radius * 7.5, 0, Math.PI * 2);
       ctx.fill();
     }
-  }
+  });
 
   const plumeGlow = ctx.createRadialGradient(width * 0.61, height * 0.62, 0, width * 0.61, height * 0.62, width * 0.34);
   plumeGlow.addColorStop(0, "rgba(110,220,255,0.16)");
@@ -245,29 +238,6 @@ function drawParticles(time = 0) {
   requestAnimationFrame(drawParticles);
 }
 
-function drawImageHero(time = 0) {
-  if (!useImageHero) return;
-  pointer.x += (pointer.tx - pointer.x) * 0.09;
-  pointer.y += (pointer.ty - pointer.y) * 0.09;
-  pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * 0.06;
-
-  const idleX = Math.sin(time * 0.00028) * 7;
-  const idleY = Math.cos(time * 0.00022) * 5;
-  const coverX = (0.5 - pointer.x) * 24 * pointer.strength;
-  const coverY = (0.5 - pointer.y) * 16 * pointer.strength;
-  const scale = 1.018 + pointer.strength * 0.012;
-
-  hero.style.setProperty("--idle-x", `${idleX.toFixed(2)}px`);
-  hero.style.setProperty("--idle-y", `${idleY.toFixed(2)}px`);
-  hero.style.setProperty("--cover-x", `${coverX.toFixed(2)}px`);
-  hero.style.setProperty("--cover-y", `${coverY.toFixed(2)}px`);
-  hero.style.setProperty("--cover-scale", scale.toFixed(3));
-  hero.style.setProperty("--light-x", `${(42 + pointer.x * 32).toFixed(2)}%`);
-  hero.style.setProperty("--light-y", `${(22 + pointer.y * 34).toFixed(2)}%`);
-
-  requestAnimationFrame(drawImageHero);
-}
-
 hero.addEventListener("pointermove", (event) => {
   const rect = hero.getBoundingClientRect();
   pointer.tx = (event.clientX - rect.left) / rect.width;
@@ -277,34 +247,12 @@ hero.addEventListener("pointermove", (event) => {
   hero.style.setProperty("--py", `${(pointer.ty - 0.5) * 18}px`);
   hero.style.setProperty("--hex-rotate", `${(pointer.tx - 0.5) * 18}deg`);
   hero.style.setProperty("--hex-scale", `${1.02 + (0.5 - Math.abs(pointer.ty - 0.5)) * 0.045}`);
-  hero.classList.add("is-reacting");
   hero.querySelector(".orbit")?.classList.add("is-reacting");
 });
 
 hero.addEventListener("pointerleave", () => {
   pointer.active = false;
-  hero.classList.remove("is-reacting");
   hero.querySelector(".orbit")?.classList.remove("is-reacting");
-});
-
-function setActiveCard(index) {
-  activeCard = index % cards.length;
-  cards.forEach((card, cardIndex) => {
-    const offset = cardIndex - activeCard;
-    const wrapped = offset < -1 ? offset + cards.length : offset > 2 ? offset - cards.length : offset;
-    const mobile = window.innerWidth < 900;
-    const x = wrapped * (mobile ? 78 : 210);
-    const y = Math.abs(wrapped) * (mobile ? 36 : 20);
-    const r = wrapped * 4;
-    card.classList.toggle("is-active", cardIndex === activeCard);
-    card.style.setProperty("--card-x", `${x}px`);
-    card.style.setProperty("--card-y", `${y}px`);
-    card.style.setProperty("--card-r", `${r}deg`);
-  });
-}
-
-cards.forEach((card, index) => {
-  card.addEventListener("pointerenter", () => setActiveCard(index));
 });
 
 caps.forEach((cap, index) => {
@@ -312,24 +260,10 @@ caps.forEach((cap, index) => {
     pointer.active = true;
     pointer.tx = 0.48 + index * 0.055;
     pointer.ty = 0.28 + (index % 3) * 0.08;
-    hero.classList.add("is-reacting");
     hero.querySelector(".orbit")?.classList.add("is-reacting");
   });
 });
 
-setInterval(() => setActiveCard(activeCard + 1), 2600);
-
-const reveal = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add("is-ready");
-    });
-  },
-  { threshold: 0.3 },
-);
-
-cards.forEach((card) => reveal.observe(card));
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
-setActiveCard(0);
-requestAnimationFrame(useImageHero ? drawImageHero : drawParticles);
+requestAnimationFrame(drawParticles);
