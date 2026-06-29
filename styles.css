@@ -62,12 +62,31 @@ button {
     url("./assets/portfolio-hero.png") center center / cover no-repeat;
 }
 
-.hero-image > :not(.topbar) {
+.hero-image > :not(.topbar, .moon-canvas, .particle-field, .orbit) {
   display: none;
 }
 
 .hero-image .topbar {
   visibility: hidden;
+}
+
+.hero-image .moon-canvas,
+.hero-image .particle-field,
+.hero-image .orbit {
+  display: block;
+}
+
+.hero-image .moon-canvas {
+  opacity: 0;
+}
+
+.hero-image .particle-field {
+  opacity: 0.9;
+}
+
+.hero-image .orbit {
+  opacity: 0.72;
+  mix-blend-mode: multiply;
 }
 
 .topbar {
@@ -221,6 +240,10 @@ button {
   transition: transform 160ms ease-out;
 }
 
+.orbit.is-reacting {
+  transition-duration: 80ms;
+}
+
 .orbit svg {
   position: absolute;
   inset: 0;
@@ -230,9 +253,36 @@ button {
   stroke-width: 1;
 }
 
+.orbit svg circle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: orbitPulse 6800ms ease-in-out infinite;
+}
+
 .orbit polygon,
 .orbit line {
   stroke-dasharray: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    stroke 180ms ease,
+    stroke-width 180ms ease,
+    transform 180ms ease;
+}
+
+.orbit polygon {
+  animation: hexDrift 9000ms linear infinite;
+}
+
+.orbit.is-reacting polygon {
+  stroke: rgba(64, 210, 255, 0.72);
+  stroke-width: 2.4;
+  transform: rotate(var(--hex-rotate, 0deg)) scale(var(--hex-scale, 1.03));
+}
+
+.orbit.is-reacting line {
+  stroke: rgba(207, 255, 62, 0.54);
+  stroke-width: 1.7;
 }
 
 .cap {
@@ -262,6 +312,18 @@ button {
 
 .cap:hover::before {
   background: var(--node-color, var(--lime));
+}
+
+@keyframes orbitPulse {
+  50% {
+    transform: scale(1.025);
+  }
+}
+
+@keyframes hexDrift {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .cap-strategy {
