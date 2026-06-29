@@ -56,6 +56,20 @@ button {
     auto;
 }
 
+.hero-image {
+  background:
+    linear-gradient(rgba(248, 248, 245, 0.02), rgba(248, 248, 245, 0.02)),
+    url("./assets/portfolio-hero.png") center center / cover no-repeat;
+}
+
+.hero-image > :not(.topbar) {
+  display: none;
+}
+
+.hero-image .topbar {
+  visibility: hidden;
+}
+
 .topbar {
   position: relative;
   z-index: 20;
@@ -509,6 +523,11 @@ button {
 }
 
 @media (max-width: 900px) {
+  .hero-image {
+    min-height: 100svh;
+    background-position: center top;
+  }
+
   .topbar {
     grid-template-columns: auto 1fr;
     padding: 24px 22px 0;

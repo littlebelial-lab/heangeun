@@ -5,6 +5,7 @@ const cards = [...document.querySelectorAll(".work-card")];
 const caps = [...document.querySelectorAll(".cap")];
 const ctx = canvas.getContext("2d");
 const moonCtx = moonCanvas.getContext("2d");
+const useImageHero = hero.classList.contains("hero-image");
 
 const pointer = { x: 0.68, y: 0.42, active: false };
 let particles = [];
@@ -19,6 +20,7 @@ function random(seed) {
 }
 
 function resizeCanvas() {
+  if (useImageHero) return;
   const rect = hero.getBoundingClientRect();
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.floor(rect.width * dpr);
@@ -171,6 +173,7 @@ function drawMoon(time) {
 }
 
 function drawParticles(time = 0) {
+  if (useImageHero) return;
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
   drawMoon(time);
@@ -219,6 +222,7 @@ function drawParticles(time = 0) {
 }
 
 hero.addEventListener("pointermove", (event) => {
+  if (useImageHero) return;
   const rect = hero.getBoundingClientRect();
   pointer.x = (event.clientX - rect.left) / rect.width;
   pointer.y = (event.clientY - rect.top) / rect.height;
@@ -228,6 +232,7 @@ hero.addEventListener("pointermove", (event) => {
 });
 
 hero.addEventListener("pointerleave", () => {
+  if (useImageHero) return;
   pointer.active = false;
 });
 
