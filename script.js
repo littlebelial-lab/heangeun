@@ -20,6 +20,7 @@ function random(seed) {
 }
 
 function resizeCanvas() {
+  if (useImageHero) return;
   const rect = hero.getBoundingClientRect();
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.floor(rect.width * dpr);
@@ -173,6 +174,7 @@ function drawMoon(time) {
 }
 
 function drawParticles(time = 0) {
+  if (useImageHero) return;
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
   pointer.x += (pointer.tx - pointer.x) * 0.12;
@@ -243,6 +245,29 @@ function drawParticles(time = 0) {
   requestAnimationFrame(drawParticles);
 }
 
+function drawImageHero(time = 0) {
+  if (!useImageHero) return;
+  pointer.x += (pointer.tx - pointer.x) * 0.09;
+  pointer.y += (pointer.ty - pointer.y) * 0.09;
+  pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * 0.06;
+
+  const idleX = Math.sin(time * 0.00028) * 7;
+  const idleY = Math.cos(time * 0.00022) * 5;
+  const coverX = (0.5 - pointer.x) * 24 * pointer.strength;
+  const coverY = (0.5 - pointer.y) * 16 * pointer.strength;
+  const scale = 1.018 + pointer.strength * 0.012;
+
+  hero.style.setProperty("--idle-x", `${idleX.toFixed(2)}px`);
+  hero.style.setProperty("--idle-y", `${idleY.toFixed(2)}px`);
+  hero.style.setProperty("--cover-x", `${coverX.toFixed(2)}px`);
+  hero.style.setProperty("--cover-y", `${coverY.toFixed(2)}px`);
+  hero.style.setProperty("--cover-scale", scale.toFixed(3));
+  hero.style.setProperty("--light-x", `${(42 + pointer.x * 32).toFixed(2)}%`);
+  hero.style.setProperty("--light-y", `${(22 + pointer.y * 34).toFixed(2)}%`);
+
+  requestAnimationFrame(drawImageHero);
+}
+
 hero.addEventListener("pointermove", (event) => {
   const rect = hero.getBoundingClientRect();
   pointer.tx = (event.clientX - rect.left) / rect.width;
@@ -252,11 +277,13 @@ hero.addEventListener("pointermove", (event) => {
   hero.style.setProperty("--py", `${(pointer.ty - 0.5) * 18}px`);
   hero.style.setProperty("--hex-rotate", `${(pointer.tx - 0.5) * 18}deg`);
   hero.style.setProperty("--hex-scale", `${1.02 + (0.5 - Math.abs(pointer.ty - 0.5)) * 0.045}`);
+  hero.classList.add("is-reacting");
   hero.querySelector(".orbit")?.classList.add("is-reacting");
 });
 
 hero.addEventListener("pointerleave", () => {
   pointer.active = false;
+  hero.classList.remove("is-reacting");
   hero.querySelector(".orbit")?.classList.remove("is-reacting");
 });
 
@@ -285,6 +312,7 @@ caps.forEach((cap, index) => {
     pointer.active = true;
     pointer.tx = 0.48 + index * 0.055;
     pointer.ty = 0.28 + (index % 3) * 0.08;
+    hero.classList.add("is-reacting");
     hero.querySelector(".orbit")?.classList.add("is-reacting");
   });
 });
@@ -304,4 +332,4 @@ cards.forEach((card) => reveal.observe(card));
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 setActiveCard(0);
-requestAnimationFrame(drawParticles);
+requestAnimationFrame(useImageHero ? drawImageHero : drawParticles);
