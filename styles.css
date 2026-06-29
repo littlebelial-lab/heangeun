@@ -1,13 +1,10 @@
 :root {
   --ink: #18191c;
-  --muted: #6a6f78;
-  --paper: #f3f3f0;
-  --line: rgba(18, 20, 24, 0.1);
+  --muted: #616873;
   --lime: #cfff3e;
   --cyan: #6fe8ff;
   --violet: #a26fff;
   --pink: #ff63cf;
-  --blue: #3f83ff;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -24,7 +21,7 @@ html {
 body {
   margin: 0;
   color: var(--ink);
-  background: #e5e7ec;
+  background: #e8ebf1;
   overflow-x: hidden;
 }
 
@@ -43,90 +40,12 @@ button {
   overflow: hidden;
   isolation: isolate;
   background:
-    linear-gradient(rgba(20, 22, 28, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20, 22, 28, 0.035) 1px, transparent 1px),
-    radial-gradient(circle at 78% 18%, rgba(163, 111, 255, 0.14), transparent 34rem),
-    radial-gradient(circle at 48% 75%, rgba(207, 255, 62, 0.16), transparent 28rem),
-    linear-gradient(125deg, #f8f8f5 0%, #ebeef4 52%, #f7f6f1 100%);
-  background-size:
-    160px 160px,
-    160px 160px,
-    auto,
-    auto,
-    auto;
-}
-
-.hero-image {
-  background: #f8f8f5;
-  --cover-x: 0px;
-  --cover-y: 0px;
-  --idle-x: 0px;
-  --idle-y: 0px;
-  --cover-scale: 1.018;
-  --light-x: 58%;
-  --light-y: 38%;
-}
-
-.hero-image::before {
-  position: absolute;
-  z-index: 1;
-  inset: -2.2%;
-  background:
-    linear-gradient(rgba(248, 248, 245, 0.02), rgba(248, 248, 245, 0.02)),
-    url("./assets/portfolio-hero.png") center center / cover no-repeat;
-  content: "";
-  transform:
-    translate3d(
-      calc(var(--cover-x) + var(--idle-x)),
-      calc(var(--cover-y) + var(--idle-y)),
-      0
-    )
-    scale(var(--cover-scale));
-  transform-origin: center;
-  transition:
-    transform 520ms cubic-bezier(0.18, 0.9, 0.18, 1),
-    filter 520ms ease;
-  will-change: transform, filter;
-}
-
-.hero-image::after {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  background:
-    radial-gradient(circle at var(--light-x) var(--light-y), rgba(207, 255, 62, 0.16), transparent 18rem),
-    radial-gradient(circle at calc(var(--light-x) + 15%) calc(var(--light-y) + 10%), rgba(111, 232, 255, 0.12), transparent 22rem),
-    linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, 0.22) 48%, transparent 58% 100%);
-  background-size: auto, auto, 220% 100%;
-  content: "";
-  mix-blend-mode: soft-light;
-  opacity: 0.8;
-  pointer-events: none;
-  animation: coverLightSweep 8s ease-in-out infinite;
-}
-
-.hero-image.is-reacting::before {
-  filter: saturate(1.06) contrast(1.025);
-}
-
-.hero-image > :not(.topbar) {
-  display: none;
-}
-
-.hero-image .topbar {
-  visibility: hidden;
-}
-
-@keyframes coverLightSweep {
-  0%,
-  100% {
-    background-position: 0 0, 0 0, 12% 0;
-    opacity: 0.58;
-  }
-  50% {
-    background-position: 0 0, 0 0, 86% 0;
-    opacity: 0.86;
-  }
+    linear-gradient(rgba(20, 22, 28, 0.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 22, 28, 0.032) 1px, transparent 1px),
+    radial-gradient(circle at 78% 18%, rgba(162, 111, 255, 0.16), transparent 34rem),
+    radial-gradient(circle at 46% 72%, rgba(207, 255, 62, 0.16), transparent 28rem),
+    linear-gradient(125deg, #fbfbf8 0%, #eef1f7 54%, #f9f7f1 100%);
+  background-size: 160px 160px, 160px 160px, auto, auto, auto;
 }
 
 .topbar {
@@ -136,7 +55,7 @@ button {
   grid-template-columns: 160px 1fr 180px;
   align-items: center;
   gap: 24px;
-  padding: 34px 42px 0;
+  padding: 32px 42px 0;
 }
 
 .mark {
@@ -149,8 +68,9 @@ button {
 .main-nav {
   display: flex;
   justify-content: center;
-  gap: clamp(28px, 5vw, 80px);
+  gap: clamp(46px, 7vw, 118px);
   font-size: 16px;
+  font-weight: 620;
 }
 
 .main-nav a {
@@ -187,15 +107,15 @@ button {
 .hero-side {
   position: absolute;
   z-index: 15;
-  left: clamp(26px, 5.5vw, 104px);
+  left: clamp(28px, 5.5vw, 104px);
   top: 19vh;
-  width: 260px;
+  width: 280px;
 }
 
 .hero-side p {
   margin: 0 0 34px;
   color: #4e535c;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: 0.68em;
   white-space: nowrap;
 }
@@ -228,67 +148,50 @@ button {
 .portfolio-title {
   position: absolute;
   z-index: 4;
-  left: 4.6vw;
-  right: 3vw;
-  bottom: 21vh;
+  left: 4vw;
+  right: 2.4vw;
+  bottom: 22vh;
   margin: 0;
   color: #17181b;
-  font-size: clamp(118px, 18.6vw, 330px);
+  font-size: clamp(120px, 19.4vw, 354px);
   font-weight: 950;
   line-height: 0.78;
   letter-spacing: -0.045em;
   transform: translate3d(calc(var(--px, 0px) * -0.42), calc(var(--py, 0px) * -0.16), 0);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.38);
-  opacity: 0;
-  animation: titleIn 1100ms 120ms cubic-bezier(0.18, 0.9, 0.18, 1) forwards;
 }
 
-@keyframes titleIn {
-  from {
-    opacity: 0;
-    transform: translate3d(calc(var(--px, 0px) * -0.42), 42px, 0) scale(1.035);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(calc(var(--px, 0px) * -0.42), calc(var(--py, 0px) * -0.16), 0) scale(1);
-  }
-}
-
+.moon-canvas,
 .particle-field {
   position: absolute;
-  z-index: 7;
   inset: 0;
   pointer-events: none;
-  mix-blend-mode: normal;
 }
 
 .moon-canvas {
-  position: absolute;
   z-index: 6;
-  inset: 0;
-  pointer-events: none;
+}
+
+.particle-field {
+  z-index: 7;
 }
 
 .orbit {
   position: absolute;
   z-index: 8;
-  left: 34%;
-  top: 9%;
-  width: min(50vw, 660px);
+  left: 35%;
+  top: 8%;
+  width: min(48vw, 650px);
   aspect-ratio: 1.32;
   transform: translate3d(calc(var(--px, 0px) * 0.52), calc(var(--py, 0px) * 0.35), 0);
   transition: transform 160ms ease-out;
-}
-
-.orbit.is-reacting {
-  transition-duration: 80ms;
 }
 
 .orbit svg {
   position: absolute;
   inset: 0;
   fill: none;
-  stroke: rgba(22, 24, 30, 0.12);
+  stroke: rgba(22, 24, 30, 0.14);
   stroke-dasharray: 2 7;
   stroke-width: 1;
 }
@@ -304,10 +207,7 @@ button {
   stroke-dasharray: none;
   transform-box: fill-box;
   transform-origin: center;
-  transition:
-    stroke 180ms ease,
-    stroke-width 180ms ease,
-    transform 180ms ease;
+  transition: stroke 180ms ease, stroke-width 180ms ease, transform 180ms ease;
 }
 
 .orbit polygon {
@@ -334,6 +234,7 @@ button {
   background: transparent;
   color: #16171a;
   font-size: 16px;
+  font-weight: 650;
   cursor: pointer;
 }
 
@@ -346,68 +247,28 @@ button {
   border-radius: 9px;
   background: rgba(255, 255, 255, 0.72);
   box-shadow: 0 0 22px color-mix(in srgb, var(--node-color), transparent 70%);
-  content: "*";
-  font-size: 13px;
+  content: attr(data-icon);
+  font-size: 15px;
+  font-weight: 900;
 }
 
 .cap:hover::before {
   background: var(--node-color, var(--lime));
 }
 
-@keyframes orbitPulse {
-  50% {
-    transform: scale(1.025);
-  }
-}
-
-@keyframes hexDrift {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.cap-strategy {
-  --node-color: var(--lime);
-  left: 47%;
-  top: 3%;
-}
-
-.cap-product {
-  --node-color: var(--pink);
-  right: -4%;
-  top: 18%;
-}
-
-.cap-visual {
-  --node-color: #7d8cff;
-  right: 3%;
-  top: 52%;
-}
-
-.cap-motion {
-  --node-color: var(--cyan);
-  left: 43%;
-  bottom: 0%;
-}
-
-.cap-brand {
-  --node-color: var(--violet);
-  left: 6%;
-  top: 53%;
-}
-
-.cap-ai {
-  --node-color: var(--cyan);
-  left: 5%;
-  top: 18%;
-}
+.cap-strategy { --node-color: var(--lime); left: 47%; top: 3%; }
+.cap-product { --node-color: var(--pink); right: -4%; top: 18%; }
+.cap-visual { --node-color: #7d8cff; right: 3%; top: 52%; }
+.cap-motion { --node-color: var(--cyan); left: 43%; bottom: 0%; }
+.cap-brand { --node-color: var(--violet); left: 6%; top: 53%; }
+.cap-ai { --node-color: var(--cyan); left: 5%; top: 18%; }
 
 .hero-footer {
   position: absolute;
   z-index: 12;
   left: 0;
   right: 0;
-  bottom: 34px;
+  bottom: 32px;
   display: grid;
   grid-template-columns: 120px 1fr 120px;
   align-items: end;
@@ -429,16 +290,8 @@ button {
 }
 
 .arrow {
-  display: block;
-  margin-top: 14px;
   font-size: 34px;
   animation: arrowPulse 1500ms ease-in-out infinite;
-}
-
-@keyframes arrowPulse {
-  50% {
-    transform: translateY(8px);
-  }
 }
 
 .scroll-label {
@@ -479,30 +332,15 @@ button {
 }
 
 .works {
-  position: relative;
   min-height: 100svh;
   padding: clamp(72px, 9vw, 130px) 5vw 110px;
-  overflow: hidden;
   background:
     radial-gradient(circle at 22% 16%, rgba(207, 255, 62, 0.22), transparent 24rem),
     radial-gradient(circle at 75% 25%, rgba(111, 232, 255, 0.2), transparent 25rem),
     linear-gradient(135deg, #f9f9f4 0%, #e9edf5 54%, #f7f5ef 100%);
 }
 
-.works::before {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(rgba(20, 22, 28, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20, 22, 28, 0.035) 1px, transparent 1px);
-  background-size: 160px 160px;
-  content: "";
-  pointer-events: none;
-}
-
 .section-copy {
-  position: relative;
-  z-index: 2;
   display: grid;
   grid-template-columns: minmax(320px, 620px) minmax(240px, 430px);
   justify-content: space-between;
@@ -532,107 +370,19 @@ button {
   line-height: 1.3;
 }
 
-.card-stage {
-  position: relative;
-  z-index: 2;
-  height: min(56vw, 620px);
-  min-height: 490px;
-  margin-top: clamp(46px, 7vw, 92px);
-  perspective: 1400px;
+@keyframes orbitPulse {
+  50% { transform: scale(1.025); }
 }
 
-.work-card {
-  position: absolute;
-  top: 4%;
-  left: 50%;
-  width: clamp(250px, 24vw, 380px);
-  height: clamp(390px, 34vw, 540px);
-  padding: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 34px;
-  background: rgba(255, 255, 255, 0.62);
-  box-shadow: 0 30px 80px rgba(18, 22, 32, 0.18);
-  backdrop-filter: blur(18px);
-  opacity: 0.94;
-  transform:
-    translateX(calc(-50% + var(--card-x, 0px)))
-    translateY(var(--card-y, 0px))
-    rotate(var(--card-r, 0deg));
-  transition:
-    transform 700ms cubic-bezier(0.18, 0.9, 0.18, 1),
-    z-index 700ms,
-    opacity 700ms;
+@keyframes hexDrift {
+  to { transform: rotate(360deg); }
 }
 
-.work-card.is-active {
-  z-index: 6;
-  transform: translateX(-50%) translateY(-34px) rotate(0deg) scale(1.08);
-}
-
-.work-card:hover {
-  z-index: 10;
-  transform: translateX(-50%) translateY(-48px) rotate(0deg) scale(1.1);
-}
-
-.atmosphere {
-  height: 70%;
-  border-radius: 25px;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 24% 22%, rgba(255, 255, 255, 0.95), transparent 14%),
-    radial-gradient(circle at 72% 28%, var(--a), transparent 24%),
-    linear-gradient(135deg, var(--b), #fff 46%, var(--c));
-}
-
-.atmosphere::before {
-  display: block;
-  width: 130%;
-  height: 130%;
-  background:
-    linear-gradient(115deg, transparent 0 45%, rgba(255, 255, 255, 0.72) 45% 46%, transparent 46% 100%),
-    radial-gradient(circle at 45% 50%, rgba(255, 255, 255, 0.24), transparent 24%);
-  transform: rotate(-8deg) translate(12%, -10%);
-  content: "";
-}
-
-.atmosphere-1 { --a: rgba(63, 131, 255, 0.72); --b: #6cbcff; --c: #101318; }
-.atmosphere-2 { --a: rgba(162, 111, 255, 0.72); --b: #b99cff; --c: #272030; }
-.atmosphere-3 { --a: rgba(207, 255, 62, 0.7); --b: #cbff55; --c: #24310f; }
-.atmosphere-4 { --a: rgba(255, 99, 207, 0.68); --b: #ff8ccf; --c: #241016; }
-
-.work-card footer {
-  padding: 20px 4px 0;
-}
-
-.work-card span {
-  font-size: 20px;
-  font-weight: 950;
-}
-
-.work-card h3 {
-  margin: 10px 0 8px;
-  font-size: clamp(22px, 2.1vw, 32px);
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.work-card p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 650;
+@keyframes arrowPulse {
+  50% { transform: translateY(8px); }
 }
 
 @media (max-width: 900px) {
-  .hero-image {
-    min-height: 100svh;
-  }
-
-  .hero-image::before {
-    background-position: center top;
-  }
-
   .topbar {
     grid-template-columns: auto 1fr;
     padding: 24px 22px 0;
@@ -644,7 +394,7 @@ button {
 
   .talk {
     justify-self: end;
-    width: 132px;
+    width: 116px;
     height: 44px;
   }
 
@@ -660,24 +410,19 @@ button {
 
   .portfolio-title {
     left: 18px;
-    bottom: 29vh;
+    bottom: 30vh;
     font-size: clamp(82px, 24vw, 170px);
   }
 
   .orbit {
-    left: 18%;
+    left: 12%;
     top: 19%;
     width: 620px;
-    opacity: 0.65;
+    opacity: 0.68;
   }
 
   .cap {
     font-size: 12px;
-  }
-
-  .moon {
-    width: 170vw;
-    bottom: -34vh;
   }
 
   .side-dots {
@@ -691,15 +436,5 @@ button {
   .section-copy span {
     display: block;
     margin-top: 24px;
-  }
-
-  .card-stage {
-    height: 650px;
-    overflow-x: clip;
-  }
-
-  .work-card {
-    width: 280px;
-    height: 430px;
   }
 }
