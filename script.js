@@ -7,7 +7,7 @@ const ctx = canvas.getContext("2d");
 const moonCtx = moonCanvas.getContext("2d");
 const useImageHero = hero.classList.contains("hero-image");
 
-const pointer = { x: 0.68, y: 0.42, active: false };
+const pointer = { x: 0.68, y: 0.42, tx: 0.68, ty: 0.42, active: false, strength: 0 };
 let particles = [];
 let dpr = Math.min(window.devicePixelRatio || 1, 2);
 let activeCard = 0;
@@ -20,7 +20,6 @@ function random(seed) {
 }
 
 function resizeCanvas() {
-  if (useImageHero) return;
   const rect = hero.getBoundingClientRect();
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.floor(rect.width * dpr);
@@ -87,6 +86,7 @@ function buildMoonTexture(width, height) {
 }
 
 function drawMoon(time) {
+  if (useImageHero) return;
   const width = moonCanvas.clientWidth;
   const height = moonCanvas.clientHeight;
   moonCtx.clearRect(0, 0, width, height);
@@ -173,15 +173,20 @@ function drawMoon(time) {
 }
 
 function drawParticles(time = 0) {
-  if (useImageHero) return;
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
+  pointer.x += (pointer.tx - pointer.x) * 0.12;
+  pointer.y += (pointer.ty - pointer.y) * 0.12;
+  pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * 0.08;
+
   drawMoon(time);
   ctx.clearRect(0, 0, width, height);
 
-  const spreadX = pointer.active ? (pointer.x - 0.58) * 340 : 0;
-  const lift = pointer.active ? (0.56 - pointer.y) * 150 : 0;
-  const burst = pointer.active ? 1.38 : 1;
+  const mouseX = pointer.x * width;
+  const mouseY = pointer.y * height;
+  const spreadX = (pointer.x - 0.58) * 360 * pointer.strength;
+  const lift = (0.56 - pointer.y) * 170 * pointer.strength;
+  const burst = 1 + pointer.strength * 0.58;
 
   ctx.save();
   ctx.globalCompositeOperation = "lighter";
@@ -190,11 +195,18 @@ function drawParticles(time = 0) {
     const p = particles[index];
     const curve = Math.sin(p.plume * Math.PI);
     const wave = Math.sin(time * 0.001 * p.speed + p.phase);
-    const x = p.x + spreadX * curve + wave * (18 + p.plume * 52);
-    const y = p.y + lift * curve + Math.cos(time * 0.0011 + p.phase) * (9 + p.plume * 28);
-    const radius = p.size * burst * (0.55 + curve * 0.9);
+    let x = p.x + spreadX * curve + wave * (18 + p.plume * 52);
+    let y = p.y + lift * curve + Math.cos(time * 0.0011 + p.phase) * (9 + p.plume * 28);
+    const dx = x - mouseX;
+    const dy = y - mouseY;
+    const distance = Math.max(Math.hypot(dx, dy), 1);
+    const reach = Math.max(width, height) * 0.18;
+    const pull = Math.max(0, 1 - distance / reach) * pointer.strength;
+    x += (dx / distance) * pull * 58;
+    y += (dy / distance) * pull * 42;
+    const radius = p.size * burst * (0.55 + curve * 0.9 + pull * 0.95);
 
-    ctx.globalAlpha = 0.12 + curve * 0.58;
+    ctx.globalAlpha = 0.12 + curve * 0.58 + pull * 0.34;
     ctx.fillStyle = p.color;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -216,24 +228,36 @@ function drawParticles(time = 0) {
   ctx.globalAlpha = 1;
   ctx.fillStyle = plumeGlow;
   ctx.fillRect(0, 0, width, height);
+
+  if (pointer.strength > 0.01) {
+    const cursorGlow = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, Math.max(width, height) * 0.16);
+    cursorGlow.addColorStop(0, `rgba(207,255,62,${0.18 * pointer.strength})`);
+    cursorGlow.addColorStop(0.34, `rgba(111,232,255,${0.12 * pointer.strength})`);
+    cursorGlow.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = cursorGlow;
+    ctx.fillRect(0, 0, width, height);
+  }
+
   ctx.restore();
   ctx.globalAlpha = 1;
   requestAnimationFrame(drawParticles);
 }
 
 hero.addEventListener("pointermove", (event) => {
-  if (useImageHero) return;
   const rect = hero.getBoundingClientRect();
-  pointer.x = (event.clientX - rect.left) / rect.width;
-  pointer.y = (event.clientY - rect.top) / rect.height;
+  pointer.tx = (event.clientX - rect.left) / rect.width;
+  pointer.ty = (event.clientY - rect.top) / rect.height;
   pointer.active = true;
-  hero.style.setProperty("--px", `${(pointer.x - 0.5) * 22}px`);
-  hero.style.setProperty("--py", `${(pointer.y - 0.5) * 18}px`);
+  hero.style.setProperty("--px", `${(pointer.tx - 0.5) * 22}px`);
+  hero.style.setProperty("--py", `${(pointer.ty - 0.5) * 18}px`);
+  hero.style.setProperty("--hex-rotate", `${(pointer.tx - 0.5) * 18}deg`);
+  hero.style.setProperty("--hex-scale", `${1.02 + (0.5 - Math.abs(pointer.ty - 0.5)) * 0.045}`);
+  hero.querySelector(".orbit")?.classList.add("is-reacting");
 });
 
 hero.addEventListener("pointerleave", () => {
-  if (useImageHero) return;
   pointer.active = false;
+  hero.querySelector(".orbit")?.classList.remove("is-reacting");
 });
 
 function setActiveCard(index) {
@@ -259,8 +283,9 @@ cards.forEach((card, index) => {
 caps.forEach((cap, index) => {
   cap.addEventListener("pointerenter", () => {
     pointer.active = true;
-    pointer.x = 0.48 + index * 0.055;
-    pointer.y = 0.28 + (index % 3) * 0.08;
+    pointer.tx = 0.48 + index * 0.055;
+    pointer.ty = 0.28 + (index % 3) * 0.08;
+    hero.querySelector(".orbit")?.classList.add("is-reacting");
   });
 });
 
