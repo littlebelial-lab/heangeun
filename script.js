@@ -39,43 +39,56 @@ function resizeCanvas() {
 }
 
 function buildParticles(width, height) {
-  const palette = ["#bffcff", "#6ddcff", "#9b7cff", "#e472ff", "#426dff", "#d6ff46"];
-  const count = width < 760 ? 520 : 1380;
+  const palette = ["#bdf6ff", "#79ddff", "#8a7cff", "#c17cff", "#f06eff", "#d8ff42"];
+  const count = width < 760 ? 900 : 2600;
   particles = Array.from({ length: count }, (_, index) => {
-    const plume = Math.pow(random(index + 17), 0.62);
-    const band = random(index + 43);
-    const spray = (random(index + 11) - 0.5) * (0.06 + plume * 0.34);
-    const horizon = height * 0.69 + (random(index + 31) - 0.5) * 42;
+    const plume = Math.pow(random(index + 17), 0.52);
+    const side = random(index + 43);
+    const plumeGroup = side > 0.34;
+    const baseX = width * (plumeGroup ? 0.55 : 0.36 + random(index + 82) * 0.22);
+    const baseY = height * (0.71 + (random(index + 31) - 0.5) * 0.06);
+    const arc = plumeGroup ? plume : Math.pow(plume, 1.8);
+    const driftX = plumeGroup
+      ? width * (0.08 + arc * 0.26) + Math.pow(random(index + 113), 2.4) * width * 0.16
+      : width * (random(index + 113) - 0.5) * 0.36;
+    const riseY = plumeGroup
+      ? height * (0.08 + arc * (0.18 + random(index + 142) * 0.55))
+      : height * (0.02 + arc * 0.28);
+    const fine = random(index + 181);
     return {
       plume,
-      x: width * (0.43 + plume * 0.34) + spray * width + Math.sin(plume * 7 + index) * 28,
-      y: horizon - plume * height * (0.34 + band * 0.36) + Math.sin(index * 0.51) * 34,
-      size: 0.45 + random(index + 51) * (band > 0.78 ? 2.1 : 1.35),
-      color: palette[index % palette.length],
-      speed: 0.22 + random(index + 90) * 0.86,
+      group: plumeGroup ? 1 : 0,
+      x: baseX + driftX + Math.sin(index * 0.37) * (12 + plume * 60),
+      y: baseY - riseY + Math.cos(index * 0.29) * (8 + plume * 46),
+      size: 0.28 + fine * (fine > 0.93 ? 2.4 : 1.05),
+      color: plumeGroup && plume > 0.62 ? palette[2 + (index % 3)] : palette[index % palette.length],
+      speed: 0.18 + random(index + 90) * 0.92,
       phase: random(index + 140) * Math.PI * 2,
+      alpha: 0.1 + random(index + 211) * (plumeGroup ? 0.48 : 0.26),
     };
   });
 }
 
 function buildMoonTexture(width, height) {
-  const craterCount = width < 760 ? 72 : 155;
+  const craterCount = width < 760 ? 120 : 280;
   moonCraters = Array.from({ length: craterCount }, (_, index) => ({
     x: random(index + 300) * width,
-    y: height * (0.64 + random(index + 410) * 0.32),
-    r: 7 + Math.pow(random(index + 510), 2.2) * (width < 760 ? 46 : 86),
-    flat: 0.26 + random(index + 610) * 0.34,
-    alpha: 0.16 + random(index + 710) * 0.22,
+    y: height * (0.61 + Math.pow(random(index + 410), 0.72) * 0.38),
+    r: 3 + Math.pow(random(index + 510), 2.65) * (width < 760 ? 58 : 118),
+    flat: 0.22 + random(index + 610) * 0.28,
+    alpha: 0.12 + random(index + 710) * 0.34,
     drift: 0.06 + random(index + 760) * 0.18,
+    angle: (random(index + 820) - 0.5) * 0.3,
   }));
 
-  const dustCount = width < 760 ? 720 : 1800;
+  const dustCount = width < 760 ? 2100 : 5200;
   moonDust = Array.from({ length: dustCount }, (_, index) => ({
     x: random(index + 900) * width,
-    y: height * (0.62 + random(index + 1000) * 0.36),
-    r: 0.35 + random(index + 1100) * 1.15,
-    a: 0.08 + random(index + 1200) * 0.22,
+    y: height * (0.6 + Math.pow(random(index + 1000), 0.72) * 0.4),
+    r: 0.25 + Math.pow(random(index + 1100), 2) * 1.7,
+    a: 0.06 + random(index + 1200) * 0.24,
     drift: 0.05 + random(index + 1300) * 0.2,
+    dark: random(index + 1400) > 0.56,
   }));
 }
 
@@ -108,12 +121,13 @@ function drawMoon(time) {
   moonCtx.closePath();
   moonCtx.clip();
 
-  const surface = moonCtx.createRadialGradient(cx - rx * 0.25, cy - ry * 0.84, 0, cx, cy, rx * 1.12);
-  surface.addColorStop(0, "#ffffff");
-  surface.addColorStop(0.2, "#d9dde1");
-  surface.addColorStop(0.48, "#8f959d");
-  surface.addColorStop(0.74, "#40454e");
-  surface.addColorStop(1, "#111318");
+  const surface = moonCtx.createRadialGradient(cx - rx * 0.38, cy - ry * 0.78, 0, cx, cy, rx * 1.14);
+  surface.addColorStop(0, "#f8faf8");
+  surface.addColorStop(0.16, "#d9dcda");
+  surface.addColorStop(0.36, "#a8adb0");
+  surface.addColorStop(0.58, "#636970");
+  surface.addColorStop(0.78, "#2d3036");
+  surface.addColorStop(1, "#0b0c10");
   moonCtx.fillStyle = surface;
   moonCtx.fillRect(0, horizonY - 80, width, height - horizonY + 120);
 
@@ -127,29 +141,51 @@ function drawMoon(time) {
   moonCtx.globalCompositeOperation = "source-over";
 
   const moonSpin = time * 0.012;
-  moonDust.forEach((d) => {
+  moonDust.forEach((d, index) => {
     const x = wrapX(d.x + moonSpin * d.drift, width, 80);
     moonCtx.globalAlpha = d.a;
-    moonCtx.fillStyle = d.y > height * 0.8 ? "#0d0f13" : "#f4f6f7";
+    moonCtx.fillStyle = d.dark || d.y > height * 0.78 ? "#15171c" : "#f0f1ed";
     moonCtx.beginPath();
     moonCtx.arc(x, d.y, d.r, 0, Math.PI * 2);
     moonCtx.fill();
+
+    if (index % 9 === 0) {
+      moonCtx.globalAlpha = d.a * 0.55;
+      moonCtx.strokeStyle = d.dark ? "#090a0d" : "#ffffff";
+      moonCtx.lineWidth = 0.45;
+      moonCtx.beginPath();
+      moonCtx.moveTo(x - d.r * 2.8, d.y + d.r * 0.5);
+      moonCtx.lineTo(x + d.r * 3.8, d.y - d.r * 0.35);
+      moonCtx.stroke();
+    }
   });
 
   moonCraters.forEach((c) => {
     const x = wrapX(c.x + moonSpin * c.drift, width, 140);
     moonCtx.save();
     moonCtx.translate(x, c.y);
+    moonCtx.rotate(c.angle);
     moonCtx.scale(1, c.flat);
-    const g = moonCtx.createRadialGradient(-c.r * 0.24, -c.r * 0.2, c.r * 0.08, 0, 0, c.r);
-    g.addColorStop(0, `rgba(255,255,255,${c.alpha * 0.9})`);
-    g.addColorStop(0.34, `rgba(70,76,86,${c.alpha * 0.7})`);
-    g.addColorStop(0.7, `rgba(0,0,0,${c.alpha * 1.55})`);
-    g.addColorStop(1, `rgba(255,255,255,${c.alpha * 0.42})`);
+    const g = moonCtx.createRadialGradient(-c.r * 0.28, -c.r * 0.26, c.r * 0.06, 0, 0, c.r);
+    g.addColorStop(0, `rgba(255,255,255,${c.alpha * 1.25})`);
+    g.addColorStop(0.28, `rgba(105,110,118,${c.alpha * 0.55})`);
+    g.addColorStop(0.62, `rgba(0,0,0,${c.alpha * 1.85})`);
+    g.addColorStop(0.84, `rgba(255,255,255,${c.alpha * 0.52})`);
+    g.addColorStop(1, `rgba(0,0,0,${c.alpha * 0.38})`);
     moonCtx.fillStyle = g;
     moonCtx.beginPath();
     moonCtx.arc(0, 0, c.r, 0, Math.PI * 2);
     moonCtx.fill();
+    moonCtx.globalAlpha = c.alpha * 0.9;
+    moonCtx.lineWidth = Math.max(1, c.r * 0.06);
+    moonCtx.strokeStyle = "rgba(255,255,255,0.42)";
+    moonCtx.beginPath();
+    moonCtx.arc(-c.r * 0.06, -c.r * 0.08, c.r * 0.9, Math.PI * 1.08, Math.PI * 1.78);
+    moonCtx.stroke();
+    moonCtx.strokeStyle = "rgba(0,0,0,0.34)";
+    moonCtx.beginPath();
+    moonCtx.arc(c.r * 0.08, c.r * 0.08, c.r * 0.92, Math.PI * 0.02, Math.PI * 0.72);
+    moonCtx.stroke();
     moonCtx.restore();
   });
 
@@ -181,44 +217,45 @@ function drawParticles(time = 0) {
 
   const mouseX = pointer.x * width;
   const mouseY = pointer.y * height;
-  const spreadX = (pointer.x - 0.58) * 360 * pointer.strength;
-  const lift = (0.56 - pointer.y) * 170 * pointer.strength;
-  const burst = 1 + pointer.strength * 0.58;
+  const spreadX = (pointer.x - 0.58) * 260 * pointer.strength;
+  const lift = (0.56 - pointer.y) * 130 * pointer.strength;
+  const burst = 1 + pointer.strength * 0.34;
 
   ctx.save();
   ctx.globalCompositeOperation = "lighter";
   particles.forEach((p, index) => {
     const curve = Math.sin(p.plume * Math.PI);
     const wave = Math.sin(time * 0.001 * p.speed + p.phase);
-    let x = p.x + spreadX * curve + wave * (18 + p.plume * 52);
-    let y = p.y + lift * curve + Math.cos(time * 0.0011 + p.phase) * (9 + p.plume * 28);
+    const drift = p.group ? 1 : 0.42;
+    let x = p.x + spreadX * curve * drift + wave * (10 + p.plume * 42);
+    let y = p.y + lift * curve * drift + Math.cos(time * 0.0011 + p.phase) * (5 + p.plume * 22);
     const dx = x - mouseX;
     const dy = y - mouseY;
     const distance = Math.max(Math.hypot(dx, dy), 1);
     const reach = Math.max(width, height) * 0.18;
     const push = Math.max(0, 1 - distance / reach) * pointer.strength;
-    x += (dx / distance) * push * 58;
-    y += (dy / distance) * push * 42;
+    x += (dx / distance) * push * (p.group ? 42 : 24);
+    y += (dy / distance) * push * (p.group ? 30 : 18);
 
-    const radius = p.size * burst * (0.55 + curve * 0.9 + push * 0.95);
-    ctx.globalAlpha = 0.12 + curve * 0.58 + push * 0.34;
+    const radius = p.size * burst * (0.42 + curve * (p.group ? 0.62 : 0.28) + push * 0.36);
+    ctx.globalAlpha = p.alpha * (0.38 + curve * 0.8 + push * 0.32);
     ctx.fillStyle = p.color;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.fill();
 
-    if (index % 10 === 0) {
-      ctx.globalAlpha = 0.035 + curve * 0.035;
+    if (p.group && index % 12 === 0) {
+      ctx.globalAlpha = 0.018 + curve * 0.035;
       ctx.beginPath();
-      ctx.arc(x, y, radius * 7.5, 0, Math.PI * 2);
+      ctx.arc(x, y, radius * 8.8, 0, Math.PI * 2);
       ctx.fill();
     }
   });
 
-  const plumeGlow = ctx.createRadialGradient(width * 0.61, height * 0.62, 0, width * 0.61, height * 0.62, width * 0.34);
-  plumeGlow.addColorStop(0, "rgba(110,220,255,0.16)");
-  plumeGlow.addColorStop(0.26, "rgba(190,96,255,0.12)");
-  plumeGlow.addColorStop(0.5, "rgba(207,255,62,0.08)");
+  const plumeGlow = ctx.createRadialGradient(width * 0.69, height * 0.39, 0, width * 0.69, height * 0.39, width * 0.3);
+  plumeGlow.addColorStop(0, "rgba(185,112,255,0.16)");
+  plumeGlow.addColorStop(0.28, "rgba(120,220,255,0.11)");
+  plumeGlow.addColorStop(0.56, "rgba(207,255,62,0.055)");
   plumeGlow.addColorStop(1, "rgba(255,255,255,0)");
   ctx.globalAlpha = 1;
   ctx.fillStyle = plumeGlow;
