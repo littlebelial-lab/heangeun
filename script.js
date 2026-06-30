@@ -1,9 +1,7 @@
 const hero = document.querySelector(".hero");
-const useImageHero = hero.classList.contains("hero-image");
-
 const pointer = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5, active: false, strength: 0 };
 
-function animateImageHero(time = 0) {
+function animateHero(time = 0) {
   pointer.x += (pointer.tx - pointer.x) * 0.08;
   pointer.y += (pointer.ty - pointer.y) * 0.08;
   pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * 0.07;
@@ -20,7 +18,7 @@ function animateImageHero(time = 0) {
   hero.style.setProperty("--light-x", `${(48 + pointer.x * 28).toFixed(2)}%`);
   hero.style.setProperty("--light-y", `${(22 + pointer.y * 34).toFixed(2)}%`);
 
-  requestAnimationFrame(animateImageHero);
+  requestAnimationFrame(animateHero);
 }
 
 hero.addEventListener("pointermove", (event) => {
@@ -36,6 +34,15 @@ hero.addEventListener("pointerleave", () => {
   hero.classList.remove("is-reacting");
 });
 
-if (useImageHero) {
-  requestAnimationFrame(animateImageHero);
-}
+const reveal = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add("is-visible");
+    });
+  },
+  { threshold: 0.18 },
+);
+
+document.querySelectorAll(".reveal").forEach((node) => reveal.observe(node));
+
+requestAnimationFrame(animateHero);
