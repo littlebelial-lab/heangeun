@@ -3,75 +3,111 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PORTFOLIO</title>
+    <title>HEANGEUN Studio</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main>
       <section class="hero hero-image" id="home" aria-label="Portfolio homepage">
-        <canvas id="moon-canvas" class="moon-canvas" aria-hidden="true"></canvas>
-        <canvas id="particle-field" class="particle-field" aria-hidden="true"></canvas>
-
         <header class="topbar">
           <a class="mark" href="#home" aria-label="Portfolio home"></a>
           <nav class="main-nav" aria-label="Primary navigation">
-            <a class="active" href="#works">精选案例</a>
-            <a href="#home">作品集</a>
+            <a class="active" href="#featured">精选案例</a>
+            <a href="#portfolio">作品集</a>
             <a href="#about">关于我</a>
           </nav>
           <a class="talk" href="#contact">联系我 <span>&nearr;</span></a>
         </header>
+      </section>
 
-        <aside class="hero-side">
-          <p>MULTI-DISCIPLINE DESIGNER</p>
-          <span></span>
-          <a href="#works">View Works <b>&nearr;</b></a>
-        </aside>
-
-        <h1 class="portfolio-title" aria-label="PORTFOLIO">PORTFOLIO</h1>
-
-        <div class="orbit" aria-label="Capability orbit">
-          <svg viewBox="0 0 660 500" aria-hidden="true">
-            <circle cx="330" cy="250" r="244"></circle>
-            <circle cx="330" cy="250" r="124"></circle>
-            <polygon points="330,34 548,156 548,344 330,466 112,344 112,156"></polygon>
-            <line x1="330" y1="34" x2="330" y2="466"></line>
-            <line x1="112" y1="156" x2="548" y2="344"></line>
-            <line x1="112" y1="344" x2="548" y2="156"></line>
-          </svg>
-          <button class="cap cap-strategy" type="button" data-icon="◎">策略</button>
-          <button class="cap cap-product" type="button" data-icon="□">产品</button>
-          <button class="cap cap-visual" type="button" data-icon="◉">视觉</button>
-          <button class="cap cap-motion" type="button" data-icon="▷">动效</button>
-          <button class="cap cap-brand" type="button" data-icon="◇">品牌</button>
-          <button class="cap cap-ai" type="button" data-icon="✦">AI</button>
-        </div>
-
-        <div class="hero-footer">
-          <span class="scroll-label">SCROLL</span>
-          <a href="#works">精选案例</a>
-          <span class="arrow">&darr;</span>
+      <section class="studio-intro reveal" aria-label="Studio introduction">
+        <p>CREATIVE STUDIO / ART DIRECTION / INTERACTION DESIGN</p>
+        <h1>用克制的系统，把想象力做成可被感知的作品。</h1>
+        <div class="intro-grid">
+          <span>品牌视觉</span>
+          <span>产品体验</span>
+          <span>动态叙事</span>
+          <span>AI 创作流</span>
         </div>
       </section>
 
-      <section class="works" id="works" aria-label="Featured projects">
-        <div class="section-copy">
-          <p>FEATURED PROJECTS</p>
-          <h2>Selected works in motion.</h2>
-          <span>Product, brand, visual and AI interaction projects.</span>
+      <section class="featured" id="featured" aria-label="Featured projects">
+        <div class="section-head reveal">
+          <p>FEATURED CASES</p>
+          <h2>精选案例</h2>
+          <span>围绕产品、品牌与内容增长，建立有记忆点的视觉系统。</span>
         </div>
 
-        <div class="showcase-panel" aria-label="Image project board">
-          <div class="showcase-bar">
-            <span>CAMPIONE</span>
-            <span>Menu</span>
-          </div>
-          <div class="photo-tile tile-main"></div>
-          <div class="photo-tile tile-left"></div>
-          <div class="photo-tile tile-top"></div>
-          <div class="photo-tile tile-right"></div>
-          <div class="photo-tile tile-bottom"></div>
+        <div class="case-stage">
+          <article class="case-card case-orange reveal">
+            <span>01 / Product Campaign</span>
+            <h3>Campione Launch</h3>
+            <p>高饱和视觉、叠层图片板块和电商叙事首页。</p>
+          </article>
+          <article class="case-card case-moon reveal">
+            <span>02 / Portfolio System</span>
+            <h3>Lunar Portfolio</h3>
+            <p>真实月面质感、大字版式和粒子化作品封面。</p>
+          </article>
+          <article class="case-card case-dark reveal">
+            <span>03 / AI Workflow</span>
+            <h3>Creative Ops Kit</h3>
+            <p>从概念、图像生成到前端落地的创作工作流。</p>
+          </article>
         </div>
+      </section>
+
+      <section class="portfolio" id="portfolio" aria-label="Portfolio gallery">
+        <div class="section-head reveal">
+          <p>PORTFOLIO</p>
+          <h2>作品集</h2>
+          <span>像苹果官网一样清晰，但保留艺术项目该有的温度和戏剧性。</span>
+        </div>
+
+        <div class="portfolio-grid">
+          <article class="work-tile wide reveal">
+            <div class="tile-visual visual-1"></div>
+            <h3>视觉身份系统</h3>
+            <p>Identity / Guideline / Web</p>
+          </article>
+          <article class="work-tile reveal">
+            <div class="tile-visual visual-2"></div>
+            <h3>产品体验设计</h3>
+            <p>UX / Motion / Prototype</p>
+          </article>
+          <article class="work-tile reveal">
+            <div class="tile-visual visual-3"></div>
+            <h3>内容创意生成</h3>
+            <p>AI / Campaign / Social</p>
+          </article>
+          <article class="work-tile tall reveal">
+            <div class="tile-visual visual-4"></div>
+            <h3>艺术化落地页</h3>
+            <p>Editorial / Frontend</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="about" id="about" aria-label="About me">
+        <div class="about-copy reveal">
+          <p>ABOUT</p>
+          <h2>我是跨学科创作者，把设计、技术和 AI 变成完整体验。</h2>
+        </div>
+        <div class="about-panel reveal">
+          <span>能力模块</span>
+          <ul>
+            <li>品牌与视觉方向</li>
+            <li>产品界面与交互原型</li>
+            <li>动效系统与网页实现</li>
+            <li>AI 图像与创意工作流</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="contact" id="contact" aria-label="Contact">
+        <p class="reveal">NEXT PROJECT</p>
+        <h2 class="reveal">让下一个作品更有锋芒。</h2>
+        <a class="contact-link reveal" href="mailto:hello@example.com">hello@example.com <span>&nearr;</span></a>
       </section>
     </main>
 
