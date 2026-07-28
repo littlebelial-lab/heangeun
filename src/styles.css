@@ -1473,3 +1473,46 @@ nav a:hover { color: var(--text); }
 @media (prefers-reduced-motion: reduce) {
   .floating-card:not(.floating-card-hero) { transform: rotate(var(--orbit-base)) translateX(var(--orbit-radius)) translateZ(-80px) rotate(calc(0deg - var(--orbit-base))); }
 }
+
+/* Reference-style layered image stack carousel */
+.floating-stage .floating-letter-one { opacity: .035; left: 34%; bottom: -8%; }
+.floating-stage .floating-letter-two, .floating-stage .fragment-top, .floating-stage .fragment-bottom, .floating-stage .floating-rule, .floating-stage .floating-note { opacity: .2; }
+.floating-stage .stack-card {
+  left: 72%;
+  top: 52%;
+  width: clamp(180px, 21vw, 360px);
+  height: clamp(235px, 42vh, 570px);
+  padding: 8px;
+  background: #f0f0ed;
+  border: 1px solid rgba(255,255,255,.3);
+  transform-origin: 50% 55%;
+  transition: transform 1.15s cubic-bezier(.2,.72,.18,1), opacity 1s ease, filter 1s ease, box-shadow 1s ease;
+  will-change: transform;
+}
+.floating-stage .stack-card img { object-fit: cover; filter: saturate(.9) contrast(1.04); }
+.floating-stage .stack-card span { color: #111; font-size: 9px; }
+.floating-stage .stack-card-position-0 {
+  z-index: 30;
+  width: clamp(265px, 29vw, 520px);
+  height: min(68vh, 760px);
+  opacity: 1;
+  filter: none;
+  box-shadow: 0 38px 100px rgba(0,0,0,.7);
+  transform: translate3d(-50%, -50%, 240px) rotate(2deg) scale(1);
+}
+.floating-stage .stack-card-position-1 { z-index: 24; opacity: .97; filter: saturate(.82); transform: translate3d(-48%, -50%, 150px) translate(-92px, -18px) rotate(-8deg) scale(.9); }
+.floating-stage .stack-card-position-2 { z-index: 20; opacity: .9; filter: saturate(.72) brightness(.88); transform: translate3d(-46%, -50%, 85px) translate(-170px, -38px) rotate(10deg) scale(.8); }
+.floating-stage .stack-card-position-3 { z-index: 16; opacity: .78; filter: saturate(.65) brightness(.72); transform: translate3d(-44%, -50%, 25px) translate(-235px, -8px) rotate(-14deg) scale(.7); }
+.floating-stage .stack-card-position-4 { z-index: 12; opacity: .62; filter: saturate(.5) brightness(.6); transform: translate3d(-42%, -50%, -35px) translate(-286px, 58px) rotate(18deg) scale(.6); }
+.floating-stage .stack-card-position-5 { z-index: 8; opacity: .44; filter: saturate(.35) brightness(.48); transform: translate3d(-40%, -50%, -95px) translate(-330px, 122px) rotate(-22deg) scale(.51); }
+.floating-stage .stack-card-position-6 { z-index: 5; opacity: .28; filter: saturate(.25) brightness(.4); transform: translate3d(-38%, -50%, -145px) translate(-362px, 174px) rotate(26deg) scale(.43); }
+.floating-stage .stack-card-position-7, .floating-stage .stack-card-position-8 { z-index: 2; opacity: 0; pointer-events: none; transform: translate3d(-35%, -50%, -200px) translate(-400px, 220px) rotate(-30deg) scale(.35); }
+@media (max-width: 760px) {
+  .floating-stage .stack-card { left: 69%; top: 53%; width: 29vw; height: 38vh; }
+  .floating-stage .stack-card-position-0 { width: 57vw; height: 58vh; transform: translate3d(-50%, -50%, 180px) rotate(2deg) scale(1); }
+  .floating-stage .stack-card-position-1 { transform: translate3d(-48%, -50%, 110px) translate(-58px, -12px) rotate(-8deg) scale(.88); }
+  .floating-stage .stack-card-position-2 { transform: translate3d(-46%, -50%, 55px) translate(-104px, -22px) rotate(10deg) scale(.77); }
+  .floating-stage .stack-card-position-3 { transform: translate3d(-44%, -50%, 10px) translate(-142px, 12px) rotate(-14deg) scale(.66); }
+  .floating-stage .stack-card-position-4 { transform: translate3d(-42%, -50%, -30px) translate(-165px, 55px) rotate(18deg) scale(.56); }
+  .floating-stage .stack-card-position-5, .floating-stage .stack-card-position-6 { opacity: 0; }
+}

@@ -789,17 +789,6 @@ function FloatingPortfolio() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
     let raf = 0;
-    let orbitRaf = 0;
-
-    const animateOrbit = (time) => {
-      if (!reduce) {
-        const spin = (time * 0.018) % 360;
-        stage.style.setProperty("--orbit-spin", `${spin.toFixed(2)}deg`);
-        stage.style.setProperty("--hero-spin", `${(Math.sin(time * 0.0007) * 1.4).toFixed(2)}deg`);
-      }
-      orbitRaf = requestAnimationFrame(animateOrbit);
-    };
-
     const onMove = (event) => {
       const rect = stage.getBoundingClientRect();
       pointer.targetX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
@@ -826,10 +815,8 @@ function FloatingPortfolio() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     raf = requestAnimationFrame(render);
-    orbitRaf = requestAnimationFrame(animateOrbit);
     return () => {
       cancelAnimationFrame(raf);
-      cancelAnimationFrame(orbitRaf);
       stage.removeEventListener("pointermove", onMove);
       stage.removeEventListener("pointerleave", onLeave);
       window.removeEventListener("scroll", onScroll);
@@ -837,7 +824,16 @@ function FloatingPortfolio() {
   }, []);
 
   const labels = ["Brand Visual", "Motion Design", "IP Design", "Web Experience", "AI Visual System"];
-  const floatingCards = cards.filter((item) => item !== hero).slice(0, 9);
+  const stackCards = cards.slice(0, 9);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (stackCards.length < 2) return undefined;
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % stackCards.length);
+    }, 3200);
+    return () => window.clearInterval(timer);
+  }, [stackCards.length]);
 
   return (
     <section className="floating-portfolio" id="portfolio" ref={sectionRef}>
@@ -854,19 +850,15 @@ function FloatingPortfolio() {
           <div className="floating-fragment fragment-bottom">A VISUAL SYSTEM IN MOTION</div>
           <div className="floating-rule rule-one" aria-hidden="true" />
           <div className="floating-rule rule-two" aria-hidden="true" />
-          {floatingCards.map((item, index) => (
-            <article className={`floating-card floating-card-depth-${index % 3} floating-card-${index}`} key={`${item.src}-${index}`} style={{ "--orbit-base": `${index * 38 - 150}deg`, "--orbit-radius": `${Math.max(190, 32 - index * 1.2)}vw` }}>
-              <img src={assetUrl(item.src)} alt="" loading="lazy" />
-              <span>{String(index + 1).padStart(2, "0")} / {labels[index % labels.length]}</span>
-            </article>
-          ))}
-          {hero && (
-            <article className="floating-card floating-card-hero">
-              <img src={assetUrl(hero.src)} alt={hero.title || "Featured portfolio project"} />
-              <div className="floating-card-meta"><span>01 / FEATURED CASE</span><span>{hero.orientation}</span></div>
-            </article>
-          )}
-          <div className="floating-note note-left">SELECTED<br />WORKS 2024—26</div>
+          {stackCards.map((item, index) => {
+            const position = (index - activeIndex + stackCards.length) % stackCards.length;
+            return (
+              <article className={`floating-card stack-card stack-card-position-${position}`} key={`${item.src}-${index}`} style={{ "--stack-index": position }}>
+                <img src={assetUrl(item.src)} alt={item.title || "Portfolio project"} loading={position < 3 ? "eager" : "lazy"} />
+                <span>{String(index + 1).padStart(2, "0")} / {labels[index % labels.length]}</span>
+              </article>
+            );
+          })}          <div className="floating-note note-left">SELECTED<br />WORKS 2024—26</div>
           <div className="floating-note note-right">SCROLL TO<br />ENTER THE ROOM</div>
         </div>
       </div>
