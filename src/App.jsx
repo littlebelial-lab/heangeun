@@ -852,8 +852,9 @@ function FloatingPortfolio() {
           <div className="floating-rule rule-two" aria-hidden="true" />
           {stackCards.map((item, index) => {
             const position = (index - activeIndex + stackCards.length) % stackCards.length;
+            const ratio = item.width && item.height ? item.width / item.height : 1;
             return (
-              <article className={`floating-card stack-card stack-card-position-${position}`} key={`${item.src}-${index}`} style={{ "--stack-index": position }}>
+              <article className={`floating-card stack-card stack-card-position-${position}`} key={`${item.src}-${index}`} style={{ "--stack-index": position, "--card-ratio": ratio }}>
                 <img src={assetUrl(item.src)} alt={item.title || "Portfolio project"} loading={position < 3 ? "eager" : "lazy"} />
                 <span>{String(index + 1).padStart(2, "0")} / {labels[index % labels.length]}</span>
               </article>
