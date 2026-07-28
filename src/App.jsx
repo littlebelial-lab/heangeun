@@ -866,7 +866,7 @@ function FloatingPortfolio() {
       <div className="floating-sticky">
         <div className="floating-intro reveal">
           <p className="eyebrow">03 / LIVING VISUAL SYSTEM</p>
-          <h2>让视觉成为<br /><em>流动的系统</em></h2>
+          <h2>让视觉<br /><em>成为流动的系统</em></h2>
           <div className="floating-labels">{labels.map((label) => <span key={label}>{label}</span>)}</div>
         </div>
         <div className="floating-stage" ref={stageRef}>

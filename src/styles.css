@@ -1587,3 +1587,35 @@ nav a:hover { color: var(--text); }
   text-shadow: 0 1px 4px #000;
 }
 .floating-stage .stack-card-position-0 { box-shadow: 0 34px 90px rgba(0,0,0,.72); }
+
+/* Match the reference hierarchy: centered-left type, bottom-left labels, right image stack */
+.floating-stage .floating-letter,
+.floating-stage .floating-fragment,
+.floating-stage .floating-rule,
+.floating-stage .floating-note { display: none; }
+.floating-intro {
+  top: clamp(150px, 25vh, 230px);
+  left: clamp(32px, 5vw, 76px);
+  width: min(43vw, 590px);
+}
+.floating-intro h2 {
+  max-width: 8em;
+  margin-top: 22px;
+  font-size: clamp(48px, 6.2vw, 96px);
+  line-height: .98;
+  letter-spacing: -.08em;
+}
+.floating-labels {
+  position: absolute;
+  top: clamp(330px, 53vh, 460px);
+  left: 0;
+  width: min(540px, 42vw);
+  max-width: none;
+  padding: 18px 16px;
+  background: rgba(10,10,10,.72);
+}
+@media (max-width: 760px) {
+  .floating-intro { top: 17vh; left: 20px; width: 70vw; }
+  .floating-intro h2 { font-size: clamp(42px, 11vw, 68px); }
+  .floating-labels { top: 270px; width: 68vw; padding: 12px 10px; }
+}
