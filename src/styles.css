@@ -1343,3 +1343,14 @@ nav a:hover { color: var(--text); }
 
 
 
+
+/* Seamless project loop */
+.project-track { gap: 0; padding: 0; animation-name: projectMarqueeLoopLeft; }
+.project-track-right { animation-name: projectMarqueeLoopRight; }
+.project-track-group { display: flex; flex: 0 0 auto; align-items: center; gap: clamp(18px, 2.2vw, 30px); padding: 0 clamp(18px, 5vw, 84px); }
+@keyframes projectMarqueeLoopLeft { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+@keyframes projectMarqueeLoopRight { from { transform: translate3d(-50%,0,0); } to { transform: translate3d(0,0,0); } }
+
+/* Keep selected case artwork fully visible */
+.case-image { aspect-ratio: auto; min-height: 0; }
+.case-image img { position: static; width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; background: #222322; }

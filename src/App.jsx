@@ -779,51 +779,38 @@ function PortfolioSlider() {
   const items = useMemo(() => data.portfolio || [], []);
   const rows = useMemo(() => {
     const splitIndex = Math.ceil(items.length / 2);
-    const topItems = items.slice(0, splitIndex);
-    const bottomItems = items.slice(splitIndex);
-
     return [
-      { label: "TOP PORTFOLIO PROJECTS", items: [...topItems, ...topItems], direction: "left" },
-      { label: "BOTTOM PORTFOLIO PROJECTS", items: [...bottomItems, ...bottomItems], direction: "right" },
+      { label: "TOP PORTFOLIO PROJECTS", items: items.slice(0, splitIndex), direction: "left" },
+      { label: "BOTTOM PORTFOLIO PROJECTS", items: items.slice(splitIndex), direction: "right" },
     ];
   }, [items]);
+
+  const renderCard = (item, rowDirection, groupIndex, itemIndex) => {
+    const projectRatio = item.width && item.height ? item.width / item.height : 1;
+    return (
+      <article className={`project-card project-${item.orientation.toLowerCase()}`} key={`${rowDirection}-${groupIndex}-${item.src}-${itemIndex}`} style={{ "--project-ratio": projectRatio }}>
+        <img src={assetUrl(item.src)} alt={item.title} loading={itemIndex < 4 ? "eager" : "lazy"} />
+      </article>
+    );
+  };
 
   return (
     <section className="portfolio-slider" id="portfolio">
       <div className="section-head reveal">
-        <div>
-          <p className="eyebrow">03 / PROJECT CARDS</p>
-          <h2>PORTFOLIO</h2>
-        </div>
-        <span>HORIZONTAL CARDS FROM THE LOCAL PORTFOLIO FOLDER. TWO ROWS DRIFT IN OPPOSITE DIRECTIONS AND PAUSE ON HOVER.</span>
+        <div><p className="eyebrow">03 / PROJECT CARDS</p><h2>PORTFOLIO</h2></div>
+        <span>CONTINUOUSLY LOOPING PROJECT CARDS. TWO ROWS DRIFT IN OPPOSITE DIRECTIONS AND PAUSE ON HOVER.</span>
       </div>
       <div className="slider-shell reveal">
         {rows.map((row) => (
-          <div
-            className={`project-track project-track-${row.direction}`}
-            aria-label={row.label}
-            key={row.direction}
-          >
-            {row.items.map((item, index) => {
-              const projectRatio = item.width && item.height ? item.width / item.height : 1;
-
-              return (
-                <article
-                  className={`project-card project-${item.orientation.toLowerCase()}`}
-                  key={`${row.direction}-${item.src}-${index}`}
-                  style={{ "--project-ratio": projectRatio }}
-                >
-                  <img src={assetUrl(item.src)} alt={item.title} loading={index < 4 ? "eager" : "lazy"} />
-                </article>
-              );
-            })}
+          <div className={`project-track project-track-${row.direction}`} aria-label={row.label} key={row.direction}>
+            <div className="project-track-group">{row.items.map((item, index) => renderCard(item, row.direction, 0, index))}</div>
+            <div className="project-track-group" aria-hidden="true">{row.items.map((item, index) => renderCard(item, row.direction, 1, index))}</div>
           </div>
         ))}
       </div>
     </section>
   );
 }
-
 function FeaturedCases() {
   return (
     <section className="featured section" id="cases">
@@ -1019,6 +1006,7 @@ export default function App() {
     </>
   );
 }
+
 
 
 
