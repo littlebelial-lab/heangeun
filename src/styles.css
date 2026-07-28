@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #191a1a;
   --bg-deep: #101111;
   --surface: #242525;
@@ -887,7 +887,7 @@ nav a:hover { color: var(--text); }
   inset: -3%;
   z-index: 0;
   display: block;
-  background: url("../底图/底图3.png?v=20260707-about-bg-20260707_104508") center / 118% auto no-repeat;
+  background: url("/底图/底图3.png?v=20260707-about-bg-20260707_104508") center / 118% auto no-repeat;
   content: "";
   filter: grayscale(1) saturate(0) contrast(1.04) brightness(0.58);
   transform: scale(1);
@@ -904,7 +904,7 @@ nav a:hover { color: var(--text); }
   inset: -3%;
   z-index: 1;
   pointer-events: none;
-  background: url("../底图/底图3.png?v=20260707-about-bg-20260707_104508") center / 118% auto no-repeat;
+  background: url("/底图/底图3.png?v=20260707-about-bg-20260707_104508") center / 118% auto no-repeat;
   opacity: calc(var(--about-reveal) * 1);
   filter: saturate(1.42) contrast(1.08) brightness(1.02);
   transform: scale(1);
@@ -1001,7 +1001,7 @@ nav a:hover { color: var(--text); }
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: url("../底图/背景2.png?v=20260706-contact-bg-2");
+  background-image: url("/底图/背景2.png?v=20260706-contact-bg-2");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1335,7 +1335,6 @@ nav a:hover { color: var(--text); }
     transition-duration: 0.01ms !important;
   }
 }
-
 
 
 
