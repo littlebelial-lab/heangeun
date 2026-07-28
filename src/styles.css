@@ -1447,3 +1447,29 @@ nav a:hover { color: var(--text); }
 .rule-one { transform: rotate(calc(-8deg + var(--gallery-progress) * 15deg)) translate3d(calc(var(--pointer-x) * -20px + var(--gallery-progress) * 90px), calc(var(--pointer-y) * -10px - var(--gallery-progress) * 80px), -140px); }
 .rule-two { transform: rotate(calc(90deg + var(--gallery-progress) * 35deg)) translate3d(calc(var(--pointer-x) * 10px - var(--gallery-progress) * 80px), 0, -90px); }
 @media (max-width: 760px) { .floating-portfolio { min-height: 260svh; } }
+
+/* Circular auto-scroll carousel inspired by the reference composition */
+.floating-stage { --orbit-spin: 0deg; --hero-spin: 0deg; }
+.floating-card:not(.floating-card-hero) {
+  left: 66%;
+  top: 52%;
+  transform-origin: center;
+  transform: rotate(calc(var(--orbit-base) + var(--orbit-spin))) translateX(var(--orbit-radius)) translateZ(calc(-180px + var(--gallery-progress) * 300px)) rotate(calc(0deg - var(--orbit-base) - var(--orbit-spin))) scale(calc(.7 + var(--gallery-progress) * .3));
+}
+.floating-card-0 { --orbit-depth: -240px; }
+.floating-card-1 { --orbit-depth: -170px; }
+.floating-card-2 { --orbit-depth: -100px; }
+.floating-card-3 { --orbit-depth: -20px; }
+.floating-card-4 { --orbit-depth: -150px; }
+.floating-card-5 { --orbit-depth: -80px; }
+.floating-card-6 { --orbit-depth: -190px; }
+.floating-card-7 { --orbit-depth: -40px; }
+.floating-card-8 { --orbit-depth: -280px; }
+.floating-card:not(.floating-card-hero) { transform: rotate(calc(var(--orbit-base) + var(--orbit-spin))) translateX(var(--orbit-radius)) translateZ(calc(var(--orbit-depth) + var(--gallery-progress) * 300px)) rotate(calc(0deg - var(--orbit-base) - var(--orbit-spin))) scale(calc(.7 + var(--gallery-progress) * .3)); }
+.floating-card-hero { transform: translate3d(calc(var(--pointer-x) * 30px + 80px - var(--gallery-progress) * 80px), calc(var(--pointer-y) * 22px + 35px - var(--gallery-progress) * 35px), calc(120px + var(--gallery-progress) * 230px)) rotate(calc(3deg - var(--gallery-progress) * 7deg + var(--hero-spin))) scale(calc(.88 + var(--gallery-progress) * .16)); }
+@media (max-width: 760px) {
+  .floating-card:not(.floating-card-hero) { left: 65%; top: 54%; transform: rotate(calc(var(--orbit-base) + var(--orbit-spin))) translateX(calc(var(--orbit-radius) * .68)) translateZ(calc(var(--orbit-depth) + var(--gallery-progress) * 240px)) rotate(calc(0deg - var(--orbit-base) - var(--orbit-spin))) scale(calc(.62 + var(--gallery-progress) * .25)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-card:not(.floating-card-hero) { transform: rotate(var(--orbit-base)) translateX(var(--orbit-radius)) translateZ(-80px) rotate(calc(0deg - var(--orbit-base))); }
+}

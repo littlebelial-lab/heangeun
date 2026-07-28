@@ -789,6 +789,16 @@ function FloatingPortfolio() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
     let raf = 0;
+    let orbitRaf = 0;
+
+    const animateOrbit = (time) => {
+      if (!reduce) {
+        const spin = (time * 0.018) % 360;
+        stage.style.setProperty("--orbit-spin", `${spin.toFixed(2)}deg`);
+        stage.style.setProperty("--hero-spin", `${(Math.sin(time * 0.0007) * 1.4).toFixed(2)}deg`);
+      }
+      orbitRaf = requestAnimationFrame(animateOrbit);
+    };
 
     const onMove = (event) => {
       const rect = stage.getBoundingClientRect();
@@ -816,8 +826,10 @@ function FloatingPortfolio() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     raf = requestAnimationFrame(render);
+    orbitRaf = requestAnimationFrame(animateOrbit);
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(orbitRaf);
       stage.removeEventListener("pointermove", onMove);
       stage.removeEventListener("pointerleave", onLeave);
       window.removeEventListener("scroll", onScroll);
@@ -843,7 +855,7 @@ function FloatingPortfolio() {
           <div className="floating-rule rule-one" aria-hidden="true" />
           <div className="floating-rule rule-two" aria-hidden="true" />
           {floatingCards.map((item, index) => (
-            <article className={`floating-card floating-card-depth-${index % 3} floating-card-${index}`} key={`${item.src}-${index}`}>
+            <article className={`floating-card floating-card-depth-${index % 3} floating-card-${index}`} key={`${item.src}-${index}`} style={{ "--orbit-base": `${index * 38 - 150}deg`, "--orbit-radius": `${Math.max(190, 32 - index * 1.2)}vw` }}>
               <img src={assetUrl(item.src)} alt="" loading="lazy" />
               <span>{String(index + 1).padStart(2, "0")} / {labels[index % labels.length]}</span>
             </article>
