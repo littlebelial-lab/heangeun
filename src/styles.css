@@ -1554,3 +1554,36 @@ nav a:hover { color: var(--text); }
   .floating-stage .stack-card-position-3 { width: 22vw; height: auto; }
   .floating-stage .stack-card-position-4 { width: 18vw; height: auto; }
 }
+
+/* Full-bleed rounded image cards with no white frame */
+.floating-stage .stack-card {
+  padding: 0;
+  border: 0;
+  border-radius: 22px;
+  background: transparent;
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+}
+.floating-stage .stack-card.is-dragging,
+.floating-stage.is-dragging { cursor: grabbing; }
+.floating-stage .stack-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  background: #111;
+}
+.floating-stage .stack-card span {
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 34px 12px 11px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0,0,0,.7));
+  border-radius: inherit;
+  text-shadow: 0 1px 4px #000;
+}
+.floating-stage .stack-card-position-0 { box-shadow: 0 34px 90px rgba(0,0,0,.72); }

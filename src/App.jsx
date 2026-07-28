@@ -788,6 +788,7 @@ function FloatingPortfolio() {
     if (!section || !stage) return undefined;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
+    const drag = { active: false, startX: 0 };
     let raf = 0;
     const onMove = (event) => {
       const rect = stage.getBoundingClientRect();
@@ -795,6 +796,25 @@ function FloatingPortfolio() {
       pointer.targetY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
     };
     const onLeave = () => { pointer.targetX = 0; pointer.targetY = 0; };
+    const onPointerDown = (event) => {
+      drag.active = true;
+      drag.startX = event.clientX;
+      stage.setPointerCapture?.(event.pointerId);
+      stage.classList.add("is-dragging");
+    };
+    const onPointerUp = (event) => {
+      if (!drag.active) return;
+      const distance = event.clientX - drag.startX;
+      drag.active = false;
+      stage.releasePointerCapture?.(event.pointerId);
+      stage.classList.remove("is-dragging");
+      if (Math.abs(distance) > 42) {
+        setActiveIndex((current) => {
+          const next = distance < 0 ? current + 1 : current - 1;
+          return (next + stackCards.length) % stackCards.length;
+        });
+      }
+    };
     const onScroll = () => {
       const rect = section.getBoundingClientRect();
       const travel = Math.max(section.offsetHeight - window.innerHeight, 1);
@@ -812,6 +832,9 @@ function FloatingPortfolio() {
 
     stage.addEventListener("pointermove", onMove);
     stage.addEventListener("pointerleave", onLeave);
+    stage.addEventListener("pointerdown", onPointerDown);
+    stage.addEventListener("pointerup", onPointerUp);
+    stage.addEventListener("pointercancel", onPointerUp);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     raf = requestAnimationFrame(render);
@@ -819,6 +842,9 @@ function FloatingPortfolio() {
       cancelAnimationFrame(raf);
       stage.removeEventListener("pointermove", onMove);
       stage.removeEventListener("pointerleave", onLeave);
+      stage.removeEventListener("pointerdown", onPointerDown);
+      stage.removeEventListener("pointerup", onPointerUp);
+      stage.removeEventListener("pointercancel", onPointerUp);
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
