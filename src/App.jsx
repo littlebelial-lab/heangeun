@@ -775,119 +775,38 @@ function MotionScreen() {
   );
 }
 
-function FloatingPortfolio() {
+function PortfolioSlider() {
   const items = useMemo(() => data.portfolio || [], []);
-  const cards = useMemo(() => items.slice(0, 12), [items]);
-  const hero = cards.find((item) => item.orientation === "Portrait") || cards[0];
-  const stageRef = useRef(null);
-  const sectionRef = useRef(null);
+  const rows = useMemo(() => {
+    const splitIndex = Math.ceil(items.length / 2);
+    return [
+      { label: "TOP PORTFOLIO PROJECTS", items: items.slice(0, splitIndex), direction: "left" },
+      { label: "BOTTOM PORTFOLIO PROJECTS", items: items.slice(splitIndex), direction: "right" },
+    ];
+  }, [items]);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const stage = stageRef.current;
-    if (!section || !stage) return undefined;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
-    const drag = { active: false, startX: 0 };
-    let raf = 0;
-    const onMove = (event) => {
-      const rect = stage.getBoundingClientRect();
-      pointer.targetX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-      pointer.targetY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-    };
-    const onLeave = () => { pointer.targetX = 0; pointer.targetY = 0; };
-    const onPointerDown = (event) => {
-      drag.active = true;
-      drag.startX = event.clientX;
-      stage.setPointerCapture?.(event.pointerId);
-      stage.classList.add("is-dragging");
-    };
-    const onPointerUp = (event) => {
-      if (!drag.active) return;
-      const distance = event.clientX - drag.startX;
-      drag.active = false;
-      stage.releasePointerCapture?.(event.pointerId);
-      stage.classList.remove("is-dragging");
-      if (Math.abs(distance) > 42) {
-        setActiveIndex((current) => {
-          const next = distance < 0 ? current + 1 : current - 1;
-          return (next + stackCards.length) % stackCards.length;
-        });
-      }
-    };
-    const onScroll = () => {
-      const rect = section.getBoundingClientRect();
-      const travel = Math.max(section.offsetHeight - window.innerHeight, 1);
-      const progress = Math.min(1, Math.max(0, -rect.top / travel));
-      section.style.setProperty("--gallery-progress", progress.toFixed(4));
-      stage.style.setProperty("--gallery-progress", progress.toFixed(4));
-    };
-    const render = () => {
-      pointer.x += (pointer.targetX - pointer.x) * 0.08;
-      pointer.y += (pointer.targetY - pointer.y) * 0.08;
-      stage.style.setProperty("--pointer-x", reduce ? "0" : pointer.x.toFixed(4));
-      stage.style.setProperty("--pointer-y", reduce ? "0" : pointer.y.toFixed(4));
-      raf = requestAnimationFrame(render);
-    };
-
-    stage.addEventListener("pointermove", onMove);
-    stage.addEventListener("pointerleave", onLeave);
-    stage.addEventListener("pointerdown", onPointerDown);
-    stage.addEventListener("pointerup", onPointerUp);
-    stage.addEventListener("pointercancel", onPointerUp);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    raf = requestAnimationFrame(render);
-    return () => {
-      cancelAnimationFrame(raf);
-      stage.removeEventListener("pointermove", onMove);
-      stage.removeEventListener("pointerleave", onLeave);
-      stage.removeEventListener("pointerdown", onPointerDown);
-      stage.removeEventListener("pointerup", onPointerUp);
-      stage.removeEventListener("pointercancel", onPointerUp);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
-  const labels = ["Brand Visual", "Motion Design", "IP Design", "Web Experience", "AI Visual System"];
-  const stackCards = cards.slice(0, 9);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    if (stackCards.length < 2) return undefined;
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % stackCards.length);
-    }, 3200);
-    return () => window.clearInterval(timer);
-  }, [stackCards.length]);
+  const renderCard = (item, rowDirection, groupIndex, itemIndex) => {
+    const projectRatio = item.width && item.height ? item.width / item.height : 1;
+    return (
+      <article className={`project-card project-${item.orientation.toLowerCase()}`} key={`${rowDirection}-${groupIndex}-${item.src}-${itemIndex}`} style={{ "--project-ratio": projectRatio }}>
+        <img src={assetUrl(item.src)} alt={item.title || "Portfolio project"} loading={itemIndex < 4 ? "eager" : "lazy"} />
+      </article>
+    );
+  };
 
   return (
-    <section className="floating-portfolio" id="portfolio" ref={sectionRef}>
-      <div className="floating-sticky">
-        <div className="floating-intro reveal">
-          <p className="eyebrow">03 / LIVING VISUAL SYSTEM</p>
-          <h2>让视觉<br /><em>成为流动的系统</em></h2>
-          <div className="floating-labels">{labels.map((label) => <span key={label}>{label}</span>)}</div>
-        </div>
-        <div className="floating-stage" ref={stageRef}>
-          <div className="floating-letter floating-letter-one" aria-hidden="true">A</div>
-          <div className="floating-letter floating-letter-two" aria-hidden="true">∞</div>
-          <div className="floating-fragment fragment-top">FORM / MOTION / IMAGE</div>
-          <div className="floating-fragment fragment-bottom">A VISUAL SYSTEM IN MOTION</div>
-          <div className="floating-rule rule-one" aria-hidden="true" />
-          <div className="floating-rule rule-two" aria-hidden="true" />
-          {stackCards.map((item, index) => {
-            const position = (index - activeIndex + stackCards.length) % stackCards.length;
-            const ratio = item.width && item.height ? item.width / item.height : 1;
-            return (
-              <article className={`floating-card stack-card stack-card-position-${position}`} key={`${item.src}-${index}`} style={{ "--stack-index": position, "--card-ratio": ratio }}>
-                <img src={assetUrl(item.src)} alt={item.title || "Portfolio project"} loading={position < 3 ? "eager" : "lazy"} />
-                <span>{String(index + 1).padStart(2, "0")} / {labels[index % labels.length]}</span>
-              </article>
-            );
-          })}          <div className="floating-note note-left">SELECTED<br />WORKS 2024—26</div>
-          <div className="floating-note note-right">SCROLL TO<br />ENTER THE ROOM</div>
-        </div>
+    <section className="portfolio-slider" id="portfolio">
+      <div className="section-head reveal">
+        <div><p className="eyebrow">03 / PROJECT CARDS</p><h2>PORTFOLIO</h2></div>
+        <span>CONTINUOUSLY LOOPING PROJECT CARDS. TWO ROWS DRIFT IN OPPOSITE DIRECTIONS AND PAUSE ON HOVER.</span>
+      </div>
+      <div className="slider-shell reveal">
+        {rows.map((row) => (
+          <div className={`project-track project-track-${row.direction}`} aria-label={row.label} key={row.direction}>
+            <div className="project-track-group">{row.items.map((item, index) => renderCard(item, row.direction, 0, index))}</div>
+            <div className="project-track-group" aria-hidden="true">{row.items.map((item, index) => renderCard(item, row.direction, 1, index))}</div>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -1078,7 +997,7 @@ export default function App() {
       <main>
         <Hero />
         <MotionScreen />
-        <FloatingPortfolio />
+        <PortfolioSlider />
         <FeaturedCases />
         <About />
         <Contact />
