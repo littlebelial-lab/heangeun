@@ -1,8 +1,8 @@
-﻿window.STUDIO_DATA = {
+window.STUDIO_DATA = {
     "featured":  [
                      {
                          "file":  "（抖音生活服务）粤见新机-生生不息KV.jpg",
-                         "title":  "Douyin Local Life Annual Gala",
+                         "title":  "抖音生活服务年度客户答谢会 方案主视觉",
                          "src":  "/精选案例/（抖音生活服务）粤见新机-生生不息KV.jpg",
                          "width":  1920,
                          "height":  1080,
@@ -10,7 +10,7 @@
                      },
                      {
                          "file":  "（命题一）一起打卡心动时刻.jpg",
-                         "title":  "Heartbeat Check-in Moments",
+                         "title":  "生活服务-抖音生活跨年季 活动方案主视觉",
                          "src":  "/精选案例/（命题一）一起打卡心动时刻.jpg",
                          "width":  1920,
                          "height":  1080,
@@ -18,7 +18,7 @@
                      },
                      {
                          "file":  "2025京东物流香港澳门中秋节整合营销项目.jpg",
-                         "title":  "Key Visual System",
+                         "title":  "京东快递港澳服务升级2周年 项目主视觉",
                          "src":  "/精选案例/2025京东物流香港澳门中秋节整合营销项目.jpg",
                          "width":  3840,
                          "height":  2160,
