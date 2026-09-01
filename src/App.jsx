@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import { gsap } from "gsap";
 import TextPressure from "./TextPressure";
 
 const data = window.STUDIO_DATA || { featured: [], portfolio: [] };
@@ -812,24 +813,72 @@ function PortfolioSlider() {
   );
 }
 function FeaturedCases() {
+  const cardRefs = useRef([]);
+  const sourceImages = useMemo(() => [...(data.featured || []), ...(data.portfolio || [])], []);
+  const folders = useMemo(() => [
+    { name: "Brand Visual", code: "01", tone: "light", images: sourceImages.slice(0, 3) },
+    { name: "Motion Design", code: "02", tone: "dark", images: sourceImages.slice(2, 5) },
+    { name: "IP Design", code: "03", tone: "mid", images: sourceImages.slice(4, 7) },
+    { name: "Editorial", code: "04", tone: "light", images: sourceImages.slice(1, 4) },
+    { name: "Web Experience", code: "05", tone: "dark", images: sourceImages.slice(5, 8) },
+    { name: "AI Visual System", code: "06", tone: "mid", images: sourceImages.slice(7, 10) },
+  ], [sourceImages]);
+
+  useEffect(() => {
+    const cards = cardRefs.current.filter(Boolean);
+    const cleanups = cards.map((card) => {
+      const previews = card.querySelectorAll(".archive-preview");
+      const onEnter = () => {
+        cards.forEach((other) => gsap.to(other, { opacity: other === card ? 1 : 0.15, duration: 0.62, ease: "power4.out", overwrite: true }));
+        gsap.to(card, { zIndex: 50, duration: 0.01, overwrite: true });
+        gsap.fromTo(previews, { y: 30, x: 0, rotation: 0, scale: 0.96, opacity: 0 }, {
+          y: (index) => -58 - index * 28,
+          x: (index) => [-42, 18, 62][index % 3],
+          rotation: (index) => [-7, 4, 8][index % 3],
+          scale: 1,
+          opacity: 1,
+          duration: 0.62,
+          stagger: 0.055,
+          ease: "expo.out",
+          overwrite: true,
+        });
+      };
+      const onLeave = () => {
+        gsap.to(cards, { opacity: 1, duration: 0.62, ease: "power4.out", overwrite: true });
+        gsap.to(card, { zIndex: "", duration: 0.01, overwrite: true });
+        gsap.to(previews, { y: 16, x: 0, rotation: 0, scale: 0.96, opacity: 0, duration: 0.55, stagger: 0.04, ease: "power4.out", overwrite: true });
+      };
+      card.addEventListener("mouseenter", onEnter);
+      card.addEventListener("mouseleave", onLeave);
+      gsap.set(previews, { y: 16, opacity: 0, scale: 0.96 });
+      return () => {
+        card.removeEventListener("mouseenter", onEnter);
+        card.removeEventListener("mouseleave", onLeave);
+      };
+    });
+    return () => cleanups.forEach((cleanup) => cleanup());
+  }, [folders]);
+
   return (
-    <section className="featured section" id="cases">
-      <div className="section-head reveal">
-        <div>
-          <p className="eyebrow">04 / SELECTED CASES</p>
-          <h2>FEATURED CASES</h2>
-        </div>
-        <span>LARGE-FORMAT CAMPAIGN VISUALS SHAPED THROUGH QUIET CONTRAST AND PRECISE VISUAL HIERARCHY.</span>
+    <section className="archive-cases section" id="cases">
+      <div className="archive-heading reveal">
+        <p className="eyebrow">04 / SELECTED CASES</p>
+        <h2>SELECTED<br /><em>CASES</em></h2>
+        <span>AN ARCHIVE OF VISUAL SYSTEMS, MOVING IMAGE AND DIGITAL WORLDS.</span>
       </div>
-      <div className="featured-grid">
-        {data.featured.map((item, index) => (
-          <article className="case-card reveal scroll-motion" data-depth={index % 2 === 0 ? 1 : -1} key={item.src}>
-            <div className="case-info">
-              <span>{String(index + 1).padStart(2, "0")} / FEATURED CASE</span>
-              <h3>{item.title}</h3>
+      <div className="archive-stack">
+        {folders.map((folder, index) => (
+          <article className={`archive-case archive-case-${index + 1}`} ref={(node) => { cardRefs.current[index] = node; }} key={folder.code}>
+            <div className="archive-previews" aria-hidden="true">
+              {folder.images.map((image, previewIndex) => (
+                <img className="archive-preview" key={`${image.src}-${previewIndex}`} src={assetUrl(image.src)} alt="" />
+              ))}
             </div>
-            <div className="case-image">
-              <img src={assetUrl(item.src)} alt={item.title} loading={index === 0 ? "eager" : "lazy"} />
+            <div className={`archive-folder archive-folder-${folder.tone}`}>
+              <div className="archive-tab" />
+              <span className="archive-code">{folder.code}</span>
+              <h3>{folder.name}</h3>
+              <span className="archive-count">{String(folder.images.length).padStart(2, "0")} PROJECTS</span>
             </div>
           </article>
         ))}
@@ -837,7 +886,6 @@ function FeaturedCases() {
     </section>
   );
 }
-
 function AboutRevealBackground() {
   const revealRef = useRef(null);
 
