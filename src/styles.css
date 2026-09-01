@@ -1689,3 +1689,45 @@ nav a:hover { color: var(--text); }
   .archive-folder h3 small { font-size: .2em; }
   .archive-description { left: 7vw; bottom: 12px; max-width: 52%; font-size: 8px; }
 }
+
+/* WORKS category view: keep every folder inside the viewport and open its archive on click */
+.archive-cases { min-height: 116svh; }
+.archive-heading { min-height: 46svh; }
+.archive-stack { height: 54svh; min-height: 430px; margin: 0; }
+.archive-case { width: 61vw; max-width: 940px; }
+.archive-case-1 { left: 0; }
+.archive-case-2 { right: 0; }
+.archive-case-3 { left: 2vw; }
+.archive-case-4 { right: 2vw; }
+.archive-case-5 { left: 0; }
+.archive-case-6 { right: 0; }
+.archive-case[role="button"] { cursor: pointer; outline: none; }
+.archive-case[role="button"]:focus-visible .archive-folder { box-shadow: 0 0 0 2px #f1f1ed; }
+.archive-folder h3 { gap: 12px; }
+.archive-modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: flex-end; justify-content: center; padding: 8vh 3vw 3vw; background: rgba(10,10,10,.72); backdrop-filter: blur(10px); }
+.archive-modal-panel { position: relative; width: min(1180px, 94vw); max-height: 82vh; overflow: auto; padding: 34px; border-radius: 8px; background: #c4c4c1; color: #1a1a1a; box-shadow: 0 30px 100px rgba(0,0,0,.5); }
+.archive-modal-close { position: absolute; top: 16px; right: 20px; width: 32px; height: 32px; border: 0; background: transparent; color: inherit; font-size: 28px; line-height: 1; cursor: pointer; }
+.archive-modal-head { padding-right: 50px; border-bottom: 1px solid rgba(0,0,0,.2); }
+.archive-modal-head > span { font-size: 10px; letter-spacing: .14em; }
+.archive-modal-head h3 { margin: 10px 0 5px; font-family: Georgia, serif; font-size: clamp(42px, 6vw, 84px); font-weight: 400; line-height: .9; letter-spacing: -.06em; }
+.archive-modal-head p { max-width: 620px; margin: 0 0 22px; font-size: 12px; line-height: 1.5; opacity: .7; }
+.archive-modal-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding-top: 24px; }
+.archive-modal-grid figure { margin: 0; }
+.archive-modal-grid img { display: block; width: 100%; height: 180px; object-fit: contain; background: #9f9f9c; border-radius: 4px; }
+.archive-modal-grid figcaption { overflow: hidden; margin-top: 7px; font-size: 10px; white-space: nowrap; text-overflow: ellipsis; }
+@media (max-width: 760px) {
+  .archive-cases { min-height: 122svh; }
+  .archive-heading { min-height: 44svh; }
+  .archive-stack { height: 58svh; }
+  .archive-case { width: 88vw; }
+  .archive-case-1 { left: -3vw; }
+  .archive-case-2 { right: -3vw; }
+  .archive-case-3 { left: 0; }
+  .archive-case-4 { right: 0; }
+  .archive-case-5 { left: -3vw; }
+  .archive-case-6 { right: -3vw; }
+  .archive-modal { padding: 6vh 14px 14px; }
+  .archive-modal-panel { padding: 24px 18px; max-height: 88vh; }
+  .archive-modal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .archive-modal-grid img { height: 150px; }
+}

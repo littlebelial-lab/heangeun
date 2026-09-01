@@ -815,14 +815,28 @@ function PortfolioSlider() {
 function FeaturedCases() {
   const cardRefs = useRef([]);
   const sourceImages = useMemo(() => [...(data.featured || []), ...(data.portfolio || [])], []);
+  const [activeFolder, setActiveFolder] = useState(null);
+  const categoryImages = useMemo(() => {
+    const matchers = {
+      key: /KV|主视觉|盛典|年会|开工季|元旦|年货节|MALL|机场|工商银行|烟草|益城/i,
+      poster: /海报|小红书|随舞|音乐会|南宁|划得来|六一|青流计划|抢券|晒出/i,
+      ip: /IP|PONO|MI MEWO|CHAO/i,
+      collateral: /包装|包枕|抱枕|餐券|工作证|瓶子|行李箱|手办/i,
+      event: /活动|会议|展会|园区|路演|年会|私享会|阅读/i,
+      brand: /品牌|品牌视觉|供应链|京东/i,
+    };
+    return Object.fromEntries(Object.entries(matchers).map(([key, matcher]) => [
+      key, sourceImages.filter((item) => matcher.test(item.file || item.title || "")),
+    ]));
+  }, [sourceImages]);
   const folders = useMemo(() => [
-    { name: "主视觉", en: "KEY VISUAL", description: "品牌KV、活动KV、Campaign主视觉、节日主视觉、产品主视觉", code: "01", tone: "light", images: sourceImages.slice(0, 3) },
-    { name: "海报", en: "DIGITAL DESIGN", description: "海报、详情页、Banner、公众号视觉、社交媒体、电商视觉", code: "02", tone: "dark", images: sourceImages.slice(2, 5) },
-    { name: "IP设计", en: "IP DESIGN", description: "IP形象、三视图、表情、动作、角色延展、IP海报", code: "03", tone: "mid", images: sourceImages.slice(4, 7) },
-    { name: "物料延展", en: "COLLATERAL", description: "宣传册、折页、单张、礼盒、卡券、手提袋、周边、印刷品", code: "04", tone: "light", images: sourceImages.slice(1, 4) },
-    { name: "空间活动", en: "EVENT & SPACE", description: "活动、会议、展会、美陈、路演、门店活动、空间视觉应用", code: "05", tone: "dark", images: sourceImages.slice(5, 8) },
-    { name: "品牌视觉", en: "BRAND IDENTITY", description: "Logo、VI、品牌色彩、字体规范、品牌视觉系统、SI视觉、品牌升级", code: "06", tone: "mid", images: sourceImages.slice(7, 10) },
-  ], [sourceImages]);
+    { name: "主视觉", en: "KEY VISUAL", description: "品牌KV、活动KV、Campaign主视觉、节日主视觉、产品主视觉", code: "01", tone: "light", category: "key" },
+    { name: "海报", en: "DIGITAL DESIGN", description: "海报、详情页、Banner、公众号视觉、社交媒体、电商视觉", code: "02", tone: "dark", category: "poster" },
+    { name: "IP设计", en: "IP DESIGN", description: "IP形象、三视图、表情、动作、角色延展、IP海报", code: "03", tone: "mid", category: "ip" },
+    { name: "物料延展", en: "COLLATERAL", description: "宣传册、折页、单张、礼盒、卡券、手提袋、周边、印刷品", code: "04", tone: "light", category: "collateral" },
+    { name: "空间活动", en: "EVENT & SPACE", description: "活动、会议、展会、美陈、路演、门店活动、空间视觉应用", code: "05", tone: "dark", category: "event" },
+    { name: "品牌视觉", en: "BRAND IDENTITY", description: "Logo、VI、品牌色彩、字体规范、品牌视觉系统、SI视觉、品牌升级", code: "06", tone: "mid", category: "brand" },
+  ].map((folder) => ({ ...folder, images: (categoryImages[folder.category] || []).slice(0, 12) })), [categoryImages]);
 
   useEffect(() => {
     const cards = cardRefs.current.filter(Boolean);
@@ -832,15 +846,9 @@ function FeaturedCases() {
         cards.forEach((other) => gsap.to(other, { opacity: other === card ? 1 : 0.15, duration: 0.62, ease: "power4.out", overwrite: true }));
         gsap.to(card, { zIndex: 50, duration: 0.01, overwrite: true });
         gsap.fromTo(previews, { y: 30, x: 0, rotation: 0, scale: 0.96, opacity: 0 }, {
-          y: (index) => -58 - index * 28,
-          x: (index) => [-42, 18, 62][index % 3],
-          rotation: (index) => [-7, 4, 8][index % 3],
-          scale: 1,
-          opacity: 1,
-          duration: 0.62,
-          stagger: 0.055,
-          ease: "expo.out",
-          overwrite: true,
+          y: (index) => -58 - index * 28, x: (index) => [-42, 18, 62][index % 3],
+          rotation: (index) => [-7, 4, 8][index % 3], scale: 1, opacity: 1,
+          duration: 0.62, stagger: 0.055, ease: "expo.out", overwrite: true,
         });
       };
       const onLeave = () => {
@@ -851,10 +859,7 @@ function FeaturedCases() {
       card.addEventListener("mouseenter", onEnter);
       card.addEventListener("mouseleave", onLeave);
       gsap.set(previews, { y: 16, opacity: 0, scale: 0.96 });
-      return () => {
-        card.removeEventListener("mouseenter", onEnter);
-        card.removeEventListener("mouseleave", onLeave);
-      };
+      return () => { card.removeEventListener("mouseenter", onEnter); card.removeEventListener("mouseleave", onLeave); };
     });
     return () => cleanups.forEach((cleanup) => cleanup());
   }, [folders]);
@@ -862,25 +867,40 @@ function FeaturedCases() {
   return (
     <section className="archive-cases section" id="cases">
       <div className="archive-heading reveal">
-        <p className="eyebrow">04 / WORKS</p><h2>WORKS</h2>
+        <p className="eyebrow">04 / WORKS</p>
+        <h2>WORKS</h2>
         <span>AN ARCHIVE OF VISUAL SYSTEMS, MOVING IMAGE AND DIGITAL WORLDS.</span>
       </div>
       <div className="archive-stack">
         {folders.map((folder, index) => (
-          <article className={`archive-case archive-case-${index + 1}`} ref={(node) => { cardRefs.current[index] = node; }} key={folder.code}>
+          <article className={"archive-case archive-case-" + (index + 1)} ref={(node) => { cardRefs.current[index] = node; }} key={folder.code}
+            role="button" tabIndex="0" onClick={() => setActiveFolder(folder)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") setActiveFolder(folder); }}>
             <div className="archive-previews" aria-hidden="true">
-              {folder.images.map((image, previewIndex) => (
-                <img className="archive-preview" key={`${image.src}-${previewIndex}`} src={assetUrl(image.src)} alt="" />
+              {folder.images.slice(0, 3).map((image, previewIndex) => (
+                <img className="archive-preview" key={image.src + "-" + previewIndex} src={assetUrl(image.src)} alt="" />
               ))}
             </div>
-            <div className={`archive-folder archive-folder-${folder.tone}`}>
+            <div className={"archive-folder archive-folder-" + folder.tone}>
               <div className="archive-tab" />
               <span className="archive-code">{folder.code}</span>
-              <h3><strong>{folder.name}</strong><small>{folder.en}</small></h3><p className="archive-description">{folder.description}</p><span className="archive-count">{String(folder.images.length).padStart(2, "0")} PROJECTS</span>
+              <h3><strong>{folder.name}</strong><small>{folder.en}</small></h3>
+              <p className="archive-description">{folder.description}</p>
+              <span className="archive-count">{String(folder.images.length).padStart(2, "0")} PROJECTS</span>
             </div>
           </article>
         ))}
       </div>
+      {activeFolder && (
+        <div className="archive-modal" role="dialog" aria-modal="true" aria-label={activeFolder.name + " works"} onClick={() => setActiveFolder(null)}>
+          <div className="archive-modal-panel" onClick={(event) => event.stopPropagation()}>
+            <button className="archive-modal-close" type="button" onClick={() => setActiveFolder(null)} aria-label="Close">×</button>
+            <div className="archive-modal-head"><span>{activeFolder.code} / {activeFolder.en}</span><h3>{activeFolder.name}</h3><p>{activeFolder.description}</p></div>
+            <div className="archive-modal-grid">
+              {activeFolder.images.map((image) => <figure key={image.src}><img src={assetUrl(image.src)} alt={image.title || activeFolder.name} /><figcaption>{image.title || activeFolder.en}</figcaption></figure>)}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
