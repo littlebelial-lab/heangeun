@@ -1800,3 +1800,129 @@ nav a:hover { color: var(--text); }
   .archive-case-6 { grid-row: 6; }
   .archive-previews { right: 6%; width: 46%; bottom: calc(100% - 10px); }
 }
+
+/* WORKS reference layout: generous white space, Works / Archive header, lower archive folders */
+.archive-cases {
+  min-height: 154svh;
+  padding: 0 clamp(28px, 3.2vw, 52px);
+  overflow: hidden;
+  background: #f4f4f2;
+  color: #191919;
+}
+.archive-heading {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 56svh;
+  padding-top: 7vh;
+}
+.archive-heading .eyebrow { color: #5f5f5c; }
+.archive-heading h2 {
+  margin-top: 4vh;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(72px, 8vw, 150px);
+  font-weight: 400;
+  line-height: .84;
+  letter-spacing: -.09em;
+}
+.archive-heading h2 em { display: none; }
+.archive-heading > .archive-word {
+  align-self: start;
+  justify-self: start;
+  margin-top: 7vh;
+  color: #d9d9d6;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(58px, 7vw, 126px);
+  letter-spacing: -.08em;
+}
+.archive-stack {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: clamp(18px, 3vw, 46px) clamp(20px, 3vw, 48px);
+  height: 82svh;
+  min-height: 640px;
+  margin: 0;
+  overflow: visible;
+}
+.archive-case,
+.archive-case-1,
+.archive-case-2,
+.archive-case-3,
+.archive-case-4,
+.archive-case-5,
+.archive-case-6 {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+}
+.archive-case-1 { grid-column: 1; grid-row: 1; }
+.archive-case-2 { grid-column: 2; grid-row: 1; }
+.archive-case-3 { grid-column: 1; grid-row: 2; }
+.archive-case-4 { grid-column: 2; grid-row: 2; }
+.archive-case-5 { grid-column: 1; grid-row: 3; }
+.archive-case-6 { grid-column: 2; grid-row: 3; }
+.archive-folder {
+  background: #d8d8d5;
+  color: #242424;
+  border-radius: 3px 3px 0 0;
+  clip-path: polygon(0 0, 31% 0, 34% 16%, 100% 16%, 100% 100%, 0 100%);
+}
+.archive-folder-dark { background: #b5b5b2; color: #202020; }
+.archive-folder-mid { background: #c5c5c2; color: #202020; }
+.archive-tab { background: inherit; }
+.archive-folder h3 {
+  margin-top: 1.5vh;
+  font-size: clamp(28px, 4.4vw, 76px);
+  line-height: .9;
+}
+.archive-folder h3 strong { font-family: Georgia, "Times New Roman", serif; font-weight: 400; }
+.archive-folder h3 small { font-size: .18em; color: inherit; opacity: .56; }
+.archive-description { max-width: 62%; font-size: 10px; color: inherit; opacity: .6; }
+.archive-previews {
+  top: auto;
+  right: 10%;
+  bottom: calc(100% - 8px);
+  width: 44%;
+  height: 145%;
+}
+.archive-preview {
+  width: clamp(86px, 10vw, 148px);
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+  box-shadow: 0 12px 26px rgba(0,0,0,.17);
+}
+.archive-preview:nth-child(2) { right: 22%; }
+.archive-preview:nth-child(3) { right: 44%; }
+.archive-case:hover .archive-folder { background: #cececa; color: #111; }
+.archive-case:hover .archive-folder-dark { background: #a2a2a0; }
+.archive-case:hover .archive-folder-mid { background: #b5b5b2; }
+@media (max-width: 760px) {
+  .archive-cases { min-height: 176svh; padding: 0 20px; }
+  .archive-heading { display: block; min-height: 42svh; padding-top: 8vh; }
+  .archive-heading h2 { margin-top: 4vh; font-size: clamp(64px, 18vw, 112px); }
+  .archive-heading > .archive-word { margin-top: 7vh; font-size: clamp(54px, 16vw, 92px); }
+  .archive-stack {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 28px;
+    height: 124svh;
+    min-height: 900px;
+  }
+  .archive-case-1,
+  .archive-case-2,
+  .archive-case-3,
+  .archive-case-4,
+  .archive-case-5,
+  .archive-case-6 { grid-column: 1; }
+  .archive-case-1 { grid-row: 1; }
+  .archive-case-2 { grid-row: 2; }
+  .archive-case-3 { grid-row: 3; }
+  .archive-case-4 { grid-row: 4; }
+  .archive-case-5 { grid-row: 5; }
+  .archive-case-6 { grid-row: 6; }
+  .archive-folder h3 { font-size: clamp(32px, 10vw, 56px); }
+  .archive-description { max-width: 58%; font-size: 8px; }
+}

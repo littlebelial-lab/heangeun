@@ -869,7 +869,7 @@ function FeaturedCases() {
       <div className="archive-heading reveal">
         <p className="eyebrow">04 / WORKS</p>
         <h2>WORKS</h2>
-        <span>AN ARCHIVE OF VISUAL SYSTEMS, MOVING IMAGE AND DIGITAL WORLDS.</span>
+        <span className="archive-word">Archive</span>
       </div>
       <div className="archive-stack">
         {folders.map((folder, index) => (
