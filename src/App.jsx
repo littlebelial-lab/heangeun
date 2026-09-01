@@ -816,12 +816,12 @@ function FeaturedCases() {
   const cardRefs = useRef([]);
   const sourceImages = useMemo(() => [...(data.featured || []), ...(data.portfolio || [])], []);
   const folders = useMemo(() => [
-    { name: "Brand Visual", code: "01", tone: "light", images: sourceImages.slice(0, 3) },
-    { name: "Motion Design", code: "02", tone: "dark", images: sourceImages.slice(2, 5) },
-    { name: "IP Design", code: "03", tone: "mid", images: sourceImages.slice(4, 7) },
-    { name: "Editorial", code: "04", tone: "light", images: sourceImages.slice(1, 4) },
-    { name: "Web Experience", code: "05", tone: "dark", images: sourceImages.slice(5, 8) },
-    { name: "AI Visual System", code: "06", tone: "mid", images: sourceImages.slice(7, 10) },
+    { name: "主视觉", en: "KEY VISUAL", description: "品牌KV、活动KV、Campaign主视觉、节日主视觉、产品主视觉", code: "01", tone: "light", images: sourceImages.slice(0, 3) },
+    { name: "海报", en: "DIGITAL DESIGN", description: "海报、详情页、Banner、公众号视觉、社交媒体、电商视觉", code: "02", tone: "dark", images: sourceImages.slice(2, 5) },
+    { name: "IP设计", en: "IP DESIGN", description: "IP形象、三视图、表情、动作、角色延展、IP海报", code: "03", tone: "mid", images: sourceImages.slice(4, 7) },
+    { name: "物料延展", en: "COLLATERAL", description: "宣传册、折页、单张、礼盒、卡券、手提袋、周边、印刷品", code: "04", tone: "light", images: sourceImages.slice(1, 4) },
+    { name: "空间活动", en: "EVENT & SPACE", description: "活动、会议、展会、美陈、路演、门店活动、空间视觉应用", code: "05", tone: "dark", images: sourceImages.slice(5, 8) },
+    { name: "品牌视觉", en: "BRAND IDENTITY", description: "Logo、VI、品牌色彩、字体规范、品牌视觉系统、SI视觉、品牌升级", code: "06", tone: "mid", images: sourceImages.slice(7, 10) },
   ], [sourceImages]);
 
   useEffect(() => {
@@ -862,8 +862,7 @@ function FeaturedCases() {
   return (
     <section className="archive-cases section" id="cases">
       <div className="archive-heading reveal">
-        <p className="eyebrow">04 / SELECTED CASES</p>
-        <h2>SELECTED<br /><em>CASES</em></h2>
+        <p className="eyebrow">04 / WORKS</p><h2>WORKS</h2>
         <span>AN ARCHIVE OF VISUAL SYSTEMS, MOVING IMAGE AND DIGITAL WORLDS.</span>
       </div>
       <div className="archive-stack">
@@ -877,8 +876,7 @@ function FeaturedCases() {
             <div className={`archive-folder archive-folder-${folder.tone}`}>
               <div className="archive-tab" />
               <span className="archive-code">{folder.code}</span>
-              <h3>{folder.name}</h3>
-              <span className="archive-count">{String(folder.images.length).padStart(2, "0")} PROJECTS</span>
+              <h3><strong>{folder.name}</strong><small>{folder.en}</small></h3><p className="archive-description">{folder.description}</p><span className="archive-count">{String(folder.images.length).padStart(2, "0")} PROJECTS</span>
             </div>
           </article>
         ))}

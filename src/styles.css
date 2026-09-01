@@ -1677,3 +1677,15 @@ nav a:hover { color: var(--text); }
   .archive-previews { right: 7vw; width: 45vw; }
   .archive-preview { width: 24vw; }
 }
+
+/* WORKS archive labels: Chinese title first, compact English category and description */
+.archive-heading h2 em { display: none; }
+.archive-folder h3 { display: flex; align-items: baseline; gap: 14px; }
+.archive-folder h3 strong { font-family: "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif; font-size: 1em; font-weight: 500; letter-spacing: .02em; }
+.archive-folder h3 small { font-family: Arial, sans-serif; font-size: .23em; font-weight: 600; letter-spacing: .13em; opacity: .62; }
+.archive-description { position: absolute; left: 4.2vw; bottom: 18px; max-width: 48%; margin: 0; font-size: 11px; line-height: 1.5; letter-spacing: .03em; opacity: .68; }
+@media (max-width: 760px) {
+  .archive-folder h3 { gap: 8px; }
+  .archive-folder h3 small { font-size: .2em; }
+  .archive-description { left: 7vw; bottom: 12px; max-width: 52%; font-size: 8px; }
+}
