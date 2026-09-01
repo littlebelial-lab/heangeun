@@ -1731,3 +1731,72 @@ nav a:hover { color: var(--text); }
   .archive-modal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .archive-modal-grid img { height: 150px; }
 }
+
+/* Works grid correction: folders are complete, separated, and previews reveal above the hovered module */
+.archive-cases { min-height: 132svh; }
+.archive-heading { min-height: 39svh; }
+.archive-stack {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(18px, 3vw, 48px);
+  row-gap: clamp(42px, 6svh, 76px);
+  height: 88svh;
+  min-height: 570px;
+  margin: 0;
+  overflow: visible;
+}
+.archive-case,
+.archive-case-1,
+.archive-case-2,
+.archive-case-3,
+.archive-case-4,
+.archive-case-5,
+.archive-case-6 {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+}
+.archive-case-1 { grid-column: 1; grid-row: 1; }
+.archive-case-2 { grid-column: 2; grid-row: 1; }
+.archive-case-3 { grid-column: 1; grid-row: 2; }
+.archive-case-4 { grid-column: 2; grid-row: 2; }
+.archive-case-5 { grid-column: 1; grid-row: 3; }
+.archive-case-6 { grid-column: 2; grid-row: 3; }
+.archive-folder { width: 100%; height: 100%; }
+.archive-previews {
+  top: auto;
+  right: 8%;
+  bottom: calc(100% - 14px);
+  width: 48%;
+  height: 145%;
+}
+.archive-preview { width: clamp(88px, 10vw, 150px); }
+.archive-case:hover .archive-previews { z-index: 5; }
+@media (max-width: 760px) {
+  .archive-cases { min-height: 136svh; }
+  .archive-heading { min-height: 37svh; }
+  .archive-stack {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    row-gap: 30px;
+    height: 104svh;
+    min-height: 760px;
+  }
+  .archive-case-1,
+  .archive-case-2,
+  .archive-case-3,
+  .archive-case-4,
+  .archive-case-5,
+  .archive-case-6 { grid-column: 1; }
+  .archive-case-1 { grid-row: 1; }
+  .archive-case-2 { grid-row: 2; }
+  .archive-case-3 { grid-row: 3; }
+  .archive-case-4 { grid-row: 4; }
+  .archive-case-5 { grid-row: 5; }
+  .archive-case-6 { grid-row: 6; }
+  .archive-previews { right: 6%; width: 46%; bottom: calc(100% - 10px); }
+}
