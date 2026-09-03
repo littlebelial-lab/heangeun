@@ -43,6 +43,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "2024京东物流供应链城市化营销项目KV.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/2024京东物流供应链城市化营销项目KV.jpg",
     "width": 4000,
@@ -51,6 +52,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "2024京东物流供应链城市化营销项目海报 (1).jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/2024京东物流供应链城市化营销项目海报 (1).jpg",
     "width": 1500,
@@ -59,6 +61,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "2024京东物流供应链城市化营销项目海报 (2).jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/2024京东物流供应链城市化营销项目海报 (2).jpg",
     "width": 1500,
@@ -67,6 +70,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "2024京东物流供应链城市化营销项目海报 (3).jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/2024京东物流供应链城市化营销项目海报 (3).jpg",
     "width": 1500,
@@ -75,6 +79,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "2026京东物流年货节kv.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/2026京东物流年货节kv.jpg",
     "width": 1920,
@@ -83,6 +88,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "2026抖音创作者大会KV.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/2026抖音创作者大会KV.jpg",
     "width": 3840,
@@ -91,6 +97,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "3.17 京东企业业务开工季走进创赛汇园区.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/3.17 京东企业业务开工季走进创赛汇园区.jpg",
     "width": 3840,
@@ -99,6 +106,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "31号+1号音乐会2176x3840px.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/31号+1号音乐会2176x3840px.jpg",
     "width": 2176,
@@ -123,6 +131,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "6-南宁.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/6-南宁.jpg",
     "width": 1200,
@@ -131,6 +140,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "614随舞海报.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/614随舞海报.jpg",
     "width": 1242,
@@ -139,6 +149,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "628随舞小红书海报.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/628随舞小红书海报.jpg",
     "width": 1242,
@@ -147,6 +158,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "6331e3e3dd3cc1f34126460d51b9dc340e66e7dd5b9d6bae4564d15358d3f168.png",
+    "category": "poster",
     "title": "",
     "src": "作品集/6331e3e3dd3cc1f34126460d51b9dc340e66e7dd5b9d6bae4564d15358d3f168.png",
     "width": 1792,
@@ -155,6 +167,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "6849fd3c12d1993f844978e61cefe84a.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/6849fd3c12d1993f844978e61cefe84a.jpg",
     "width": 1200,
@@ -163,6 +176,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "92e9f3b1e158d7bdcf56ab3c7bed681c.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/92e9f3b1e158d7bdcf56ab3c7bed681c.jpg",
     "width": 1200,
@@ -187,6 +201,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "A.png",
+    "category": "poster",
     "title": "",
     "src": "作品集/A.png",
     "width": 1024,
@@ -195,6 +210,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "CHAO.png",
+    "category": "ip",
     "title": "",
     "src": "作品集/CHAO.png",
     "width": 1448,
@@ -203,6 +219,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "ChatGPT Image 2026年7月1日 11_39_26.png",
+    "category": "poster",
     "title": "",
     "src": "作品集/ChatGPT Image 2026年7月1日 11_39_26.png",
     "width": 1122,
@@ -219,6 +236,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "JD-MALL.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/JD-MALL.jpg",
     "width": 2752,
@@ -227,6 +245,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "MI MEWO WORLD 2.png",
+    "category": "ip",
     "title": "",
     "src": "作品集/MI MEWO WORLD 2.png",
     "width": 1086,
@@ -235,6 +254,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "MI MEWO WORLD 3.png",
+    "category": "ip",
     "title": "",
     "src": "作品集/MI MEWO WORLD 3.png",
     "width": 1086,
@@ -243,6 +263,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "MI MEWO WORLD 4.png",
+    "category": "ip",
     "title": "",
     "src": "作品集/MI MEWO WORLD 4.png",
     "width": 1086,
@@ -251,6 +272,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "MI MEWO WORLD.png",
+    "category": "ip",
     "title": "",
     "src": "作品集/MI MEWO WORLD.png",
     "width": 1086,
@@ -259,6 +281,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "PONO角色三视图与周边延展.png",
+    "category": "ip",
     "title": "",
     "src": "作品集/PONO角色三视图与周边延展.png",
     "width": 1088,
@@ -267,6 +290,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "PONO角色周边产品延展.png",
+    "category": "ip",
     "title": "",
     "src": "作品集/PONO角色周边产品延展.png",
     "width": 1088,
@@ -275,6 +299,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y0.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y0.jpg",
     "width": 1760,
@@ -283,6 +308,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y1.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y1.jpg",
     "width": 1760,
@@ -291,6 +317,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y11.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y11.jpg",
     "width": 3200,
@@ -299,6 +326,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y12.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y12.jpg",
     "width": 3200,
@@ -307,6 +335,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y13.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y13.jpg",
     "width": 3200,
@@ -315,6 +344,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y14.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y14.jpg",
     "width": 3200,
@@ -323,6 +353,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y15.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y15.jpg",
     "width": 3200,
@@ -331,6 +362,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y16.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y16.jpg",
     "width": 3200,
@@ -339,6 +371,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y17.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y17.jpg",
     "width": 3200,
@@ -347,6 +380,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y18.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y18.jpg",
     "width": 3200,
@@ -355,6 +389,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y19.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y19.jpg",
     "width": 3200,
@@ -363,6 +398,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y2.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y2.jpg",
     "width": 1760,
@@ -371,6 +407,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y20.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y20.jpg",
     "width": 3200,
@@ -379,6 +416,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y3.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y3.jpg",
     "width": 1760,
@@ -387,6 +425,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y4.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y4.jpg",
     "width": 1760,
@@ -395,6 +434,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y5.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y5.jpg",
     "width": 1760,
@@ -403,6 +443,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y6.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y6.jpg",
     "width": 1760,
@@ -411,6 +452,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y7.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y7.jpg",
     "width": 1760,
@@ -419,6 +461,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "Y9.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/Y9.jpg",
     "width": 1760,
@@ -427,6 +470,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "⽉满益城·中秋寻宝记KV.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/⽉满益城·中秋寻宝记KV.jpg",
     "width": 1920,
@@ -435,6 +479,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "京东MALL 邻里养生站.png",
+    "category": "event",
     "title": "",
     "src": "作品集/京东MALL 邻里养生站.png",
     "width": 1672,
@@ -443,6 +488,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "京东MALL-618-KV.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/京东MALL-618-KV.jpg",
     "width": 1200,
@@ -451,6 +497,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "京东mall元旦kv.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/京东mall元旦kv.jpg",
     "width": 1920,
@@ -459,6 +506,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "京东MALL年货节kv.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/京东MALL年货节kv.jpg",
     "width": 1920,
@@ -467,6 +515,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "京东X星河WORLD园区服务直通车主视觉.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/京东X星河WORLD园区服务直通车主视觉.jpg",
     "width": 3840,
@@ -475,6 +524,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "京东业务工商银行阅读活动.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/京东业务工商银行阅读活动.jpg",
     "width": 3840,
@@ -483,6 +533,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "京东来了走进广州烟草大廈KV.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/京东来了走进广州烟草大廈KV.jpg",
     "width": 3840,
@@ -491,6 +542,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "六一小红书海报.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/六一小红书海报.jpg",
     "width": 1242,
@@ -499,6 +551,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "划得来游园会小红书海报.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/划得来游园会小红书海报.jpg",
     "width": 1242,
@@ -507,6 +560,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "划得来游园会小红书海报2.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/划得来游园会小红书海报2.jpg",
     "width": 1242,
@@ -515,6 +569,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "制作人私享会kv 定稿.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/制作人私享会kv 定稿.jpg",
     "width": 160,
@@ -523,6 +578,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "包枕效果图.png",
+    "category": "collateral",
     "title": "",
     "src": "作品集/包枕效果图.png",
     "width": 1254,
@@ -531,6 +587,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "包装盒效果图.png",
+    "category": "collateral",
     "title": "",
     "src": "作品集/包装盒效果图.png",
     "width": 1536,
@@ -539,6 +596,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "国庆秋季家装节KV.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/国庆秋季家装节KV.jpg",
     "width": 3840,
@@ -547,6 +605,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "大富翁游戏画面80x80cm.jpg",
+    "category": "event",
     "title": "",
     "src": "作品集/大富翁游戏画面80x80cm.jpg",
     "width": 9449,
@@ -563,6 +622,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "套章.png",
+    "category": "collateral",
     "title": "",
     "src": "作品集/套章.png",
     "width": 1470,
@@ -571,6 +631,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "小程序国补抢券攻略.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/小程序国补抢券攻略.jpg",
     "width": 1242,
@@ -579,6 +640,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "小红书1242x1660px_画板 1.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/小红书1242x1660px_画板 1.jpg",
     "width": 2588,
@@ -587,6 +649,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "小红书海报.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/小红书海报.jpg",
     "width": 1242,
@@ -595,6 +658,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "工作证.png",
+    "category": "collateral",
     "title": "",
     "src": "作品集/工作证.png",
     "width": 1535,
@@ -603,6 +667,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "工作证P图.png",
+    "category": "collateral",
     "title": "",
     "src": "作品集/工作证P图.png",
     "width": 3009,
@@ -611,6 +676,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "手办熊包装盒定稿.jpg",
+    "category": "collateral",
     "title": "",
     "src": "作品集/手办熊包装盒定稿.jpg",
     "width": 11980,
@@ -619,6 +685,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "抖音直播盛典.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/抖音直播盛典.jpg",
     "width": 3840,
@@ -635,6 +702,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "晒出我的宝藏1㎡ 晒单赢免单_画板 1.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/晒出我的宝藏1㎡ 晒单赢免单_画板 1.jpg",
     "width": 1242,
@@ -643,6 +711,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "机场通主视觉.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/机场通主视觉.jpg",
     "width": 3840,
@@ -651,6 +720,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "活动小红书海报-2.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/活动小红书海报-2.jpg",
     "width": 1242,
@@ -659,6 +729,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "瓶子贴纸.png",
+    "category": "collateral",
     "title": "",
     "src": "作品集/瓶子贴纸.png",
     "width": 1024,
@@ -667,6 +738,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "益世界年会主视觉.jpg",
+    "category": "key",
     "title": "",
     "src": "作品集/益世界年会主视觉.jpg",
     "width": 160,
@@ -675,6 +747,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "行李箱效果图.jpg",
+    "category": "collateral",
     "title": "",
     "src": "作品集/行李箱效果图.jpg",
     "width": 1200,
@@ -683,6 +756,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "青流计划-威露士.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/青流计划-威露士.jpg",
     "width": 2000,
@@ -691,6 +765,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "青流计划-洁芙柔.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/青流计划-洁芙柔.jpg",
     "width": 2000,
@@ -699,6 +774,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "青流计划-海氏海诺.jpg",
+    "category": "poster",
     "title": "",
     "src": "作品集/青流计划-海氏海诺.jpg",
     "width": 2000,
@@ -707,6 +783,7 @@ window.STUDIO_DATA = {
   },
   {
     "file": "餐券.png",
+    "category": "collateral",
     "title": "",
     "src": "作品集/餐券.png",
     "width": 1448,
@@ -715,5 +792,6 @@ window.STUDIO_DATA = {
   }
 ],
 };
+
 
 
